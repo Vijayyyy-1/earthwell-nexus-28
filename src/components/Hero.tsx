@@ -27,7 +27,7 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className="absolute inset-0 gradient-hero opacity-90" />
+        <div className="absolute inset-0 gradient-hero opacity-60" />
       </div>
 
       {/* Content */}
@@ -51,19 +51,28 @@ const Hero = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
               {/* Property Type/Search */}
               <div className="relative">
-                <label className="block text-sm font-medium text-muted-foreground mb-2">
-                  Property Type
-                </label>
-                <div className="relative">
-                  <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <Input
-                    placeholder="Office, Retail, Industrial..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 h-12 bg-background border-border"
-                  />
-                </div>
-              </div>
+  <label className="block text-sm font-medium text-muted-foreground mb-2">
+    Property Type
+  </label>
+  <div className="relative">
+    <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
+    <select
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  className="pl-12 pr-4 h-12 w-full bg-background border border-border rounded-xl text-foreground 
+             focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 appearance-none"
+>
+  <option value="">Select Type</option>
+  <option value="Rent">Rent</option>
+  <option value="Purchase">Purchase</option>
+  <option value="Sale">Sale</option>
+</select>
+    {/* Optional: Add a dropdown arrow */}
+    <div className="pointer-events-none absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
+      ▼
+    </div>
+  </div>
+</div>
 
               {/* Location */}
               <div className="relative">
@@ -73,7 +82,7 @@ const Hero = () => {
                 <div className="relative">
                   <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
-                    placeholder="City, State, ZIP"
+                    placeholder="City, State, Pincode"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="pl-12 h-12 bg-background border-border"
@@ -87,7 +96,10 @@ const Hero = () => {
                   Price Range
                 </label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                  {/* <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" /> */}
+                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground flex items-center justify-center">
+    ₹
+  </span>
                   <Input
                     placeholder="Any Budget"
                     value={priceRange}

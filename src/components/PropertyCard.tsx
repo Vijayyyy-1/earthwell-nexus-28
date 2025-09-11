@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { Property } from "@/data/properties";
+import officeBuilding1 from "@/assets/office-building-1.jpg";
+import heroBuilding from "@/assets/hero-commercial-building.jpg";
 
 interface PropertyCardProps {
   property: Property;

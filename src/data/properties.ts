@@ -1,3 +1,8 @@
+import officeBuilding1 from "@/assets/office-building-1.jpg";
+import heroBuilding from "@/assets/hero-commercial-building.jpg";
+import heroImg from "@/assets/hero.jpg";
+import retailCenter from "@/assets/retail-center.jpg";
+import warehouse from "@/assets/warehouse-industrial.jpg";
 // Mock property data for Earthwell Realty
 export interface Property {
   id: string;
@@ -53,10 +58,7 @@ export const mockProperties: Property[] = [
       zip: "30309",
       coordinates: [-84.3880, 33.7490]
     },
-    images: [
-      "/assets/office-building-1.jpg",
-      "/assets/hero-commercial-building.jpg"
-    ],
+    images:  [officeBuilding1, heroBuilding],
     description: "A prestigious Class A office building in the heart of Atlanta's business district. Features modern amenities, floor-to-ceiling windows, and exceptional city views. Perfect for corporate headquarters or multi-tenant investment.",
     features: [
       "Class A Office Space",
@@ -116,10 +118,7 @@ export const mockProperties: Property[] = [
       zip: "28277",
       coordinates: [-80.8431, 35.2271]
     },
-    images: [
-      "/assets/retail-center.jpg",
-      "/assets/office-building-1.jpg"
-    ],
+    images:  [heroImg],
     description: "Prime retail destination in Charlotte's upscale shopping district. High foot traffic location with excellent visibility and accessibility. Ideal for luxury brands and high-end retail concepts.",
     features: [
       "High-Traffic Location",
@@ -179,10 +178,7 @@ export const mockProperties: Property[] = [
       zip: "38118",
       coordinates: [-90.0490, 35.1495]
     },
-    images: [
-      "/assets/warehouse-industrial.jpg",
-      "/assets/office-building-1.jpg"
-    ],
+    images:  [retailCenter],
     description: "State-of-the-art distribution facility strategically located near major transportation hubs. Features modern dock facilities, high ceilings, and advanced logistics capabilities.",
     features: [
       "Clear Height 32'",
@@ -230,10 +226,7 @@ export const mockProperties: Property[] = [
       zip: "37203",
       coordinates: [-86.7816, 36.1627]
     },
-    images: [
-      "/assets/office-building-1.jpg",
-      "/assets/hero-commercial-building.jpg"
-    ],
+    images:  [warehouse],
     description: "Premier medical office building adjacent to major hospital campus. Fully equipped for healthcare tenants with specialized infrastructure and convenient patient access.",
     features: [
       "Medical Gas Systems",
@@ -293,10 +286,7 @@ export const mockProperties: Property[] = [
       zip: "35215",
       coordinates: [-86.7991, 33.5207]
     },
-    images: [
-      "/assets/warehouse-industrial.jpg",
-      "/assets/office-building-1.jpg"
-    ],
+    images: [officeBuilding1],
     description: "Heavy-duty manufacturing facility with crane capabilities and specialized power infrastructure. Ideal for automotive, aerospace, or heavy equipment manufacturing operations.",
     features: [
       "30-Ton Bridge Crane",
@@ -344,10 +334,7 @@ export const mockProperties: Property[] = [
       zip: "27606",
       coordinates: [-78.6382, 35.7796]
     },
-    images: [
-      "/assets/office-building-1.jpg",
-      "/assets/retail-center.jpg"
-    ],
+    images: [heroBuilding],
     description: "Contemporary office campus in Research Triangle Park area. Features flexible floor plates, outdoor workspace, and proximity to major tech companies and universities.",
     features: [
       "Flexible Floor Plates",
