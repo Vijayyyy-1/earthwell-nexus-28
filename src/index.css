@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Earthwell Realty Design System - Luxury Commercial Real Estate
+Refined, sophisticated palette inspired by the Earthwell logo.
+Professional, minimal, and elegant - no dark mode.
+*/
+
+@layer base {
+  :root {
+    /* Base colors - Ultra-clean luxury theme */
+    --background: 0 0% 99%;
+    --foreground: 0 0% 12%;
+
+    /* Card system - Premium whites */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    /* Popover system */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    /* Primary - Red from Earthwell logo */
+    --primary: 0 85% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-muted: 0 75% 55%;
+    --primary-light: 0 85% 97%;
+
+    /* Secondary - Gold from logo border */
+    --secondary: 45 100% 50%;
+    --secondary-foreground: 0 0% 12%;
+    --secondary-muted: 45 85% 60%;
+    --secondary-light: 45 100% 97%;
+
+    /* Neutral grays - Sophisticated and minimal */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent - Refined gold highlights */
+    --accent: 45 100% 50%;
+    --accent-foreground: 0 0% 12%;
+
+    /* Status colors - Refined and professional */
+    --destructive: 0 85% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --success: 142 65% 45%;
+    --success-foreground: 0 0% 98%;
+
+    /* UI elements - Clean and refined */
+    --border: 0 0% 92%;
+    --input: 0 0% 100%;
+    --ring: 0 85% 45%;
+
+    /* Luxury gradients - Based on logo colors */
+    --gradient-primary: linear-gradient(135deg, hsl(0 85% 45%), hsl(0 75% 55%));
+    --gradient-secondary: linear-gradient(135deg, hsl(45 100% 50%), hsl(45 85% 60%));
+    --gradient-subtle: linear-gradient(135deg, hsl(0 0% 99%), hsl(0 0% 96%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 99%) 0%, hsl(0 0% 97%) 50%, hsl(45 100% 98%) 100%);
+    --gradient-luxury: linear-gradient(135deg, hsl(0 85% 45% / 0.03), hsl(45 100% 50% / 0.03));
+
+    /* Elegant shadows - Sophisticated depth */
+    --shadow-luxury: 0 25px 60px -15px hsl(0 0% 12% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(0 0% 12% / 0.06);
+    --shadow-subtle: 0 4px 20px -4px hsl(0 0% 12% / 0.04);
+    --shadow-glow: 0 0 40px hsl(0 85% 45% / 0.1);
+
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-luxury: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* No dark mode - luxury light theme only */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background: hsl(var(--background));
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Luxury utility classes - Commercial real estate focused */
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+  
+  .gradient-luxury {
+    background: var(--gradient-luxury);
+  }
+  
+  .shadow-luxury {
+    box-shadow: var(--shadow-luxury);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .shadow-subtle {
+    box-shadow: var(--shadow-subtle);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-luxury {
+    transition: var(--transition-luxury);
+  }
+
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-secondary {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Luxury spacing and layout */
+  .luxury-container {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
+  }
+  
+  .luxury-section {
+    @apply py-16 lg:py-24;
+  }
+  
+  /* Premium typography */
+  .heading-luxury {
+    @apply text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight text-primary;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .subheading-luxury {
+    @apply text-xl lg:text-2xl font-light text-muted-foreground;
+  }
+  
+  /* Professional buttons */
+  .btn-luxury {
+    @apply px-8 py-4 bg-primary text-primary-foreground hover:bg-primary-muted transition-luxury shadow-subtle hover:shadow-card;
+  }
+  
+  .btn-secondary-luxury {
+    @apply px-8 py-4 bg-secondary text-secondary-foreground hover:bg-secondary-muted transition-luxury shadow-subtle hover:shadow-card;
+  }
+}
