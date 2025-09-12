@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/earthwell-nexus-28/" : "/",
+   base: "/earthwell-nexus-28/",
   server: {
     host: "::",
     port: 8080,
