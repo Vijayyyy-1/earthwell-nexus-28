@@ -23,6 +23,7 @@ import {
   Grid3X3,
   List,
 } from "lucide-react";
+import DemoChatbot from "@/components/DemoChatbot";
 
 const Properties = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -313,9 +314,9 @@ const Properties = () => {
               <div
                 key={property.id}
                 data-aos="fade-up"
-                data-aos-delay={index * 200}
-                 className="rounded-2xl border border-border bg-card shadow-md hover:shadow-xl transform hover:scale-[1.02] transition-all duration-300"
->
+                data-aos-delay={index * 100} // stagger nicely
+                className="rounded-2xl border border-border bg-card shadow-md transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
+              >
                 <PropertyCard
                   property={property}
                   featured={index === 0 && viewMode === "grid"}
@@ -346,7 +347,10 @@ const Properties = () => {
           </div>
         )}
       </div>
-      <CompareButton />
+      <div className="fixed bottom-20 right-24 z-50">
+        <CompareButton />
+      </div>
+      <DemoChatbot />
     </div>
   );
 };

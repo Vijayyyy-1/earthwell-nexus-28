@@ -26,7 +26,8 @@ const App = () => {
     AOS.init({
       duration: 800, // animation duration
       once: true, // run animation only once
-      offset: 100, // how far before element is visible
+      easing: "ease-in-out",
+      offset: 200, // how far before element is visible
     });
   }, []);
   return (
