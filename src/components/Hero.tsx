@@ -11,7 +11,7 @@ import heroVideo from "@/assets/hero.mp4";
 // ENHANCEMENT (Optional): Add a library for number animations
 import CountUp from "react-countup";
 
-const AnimatedStat = ({ end, prefix = "", suffix = "" }) => (
+const AnimatedStat = ({ end, prefix = "", suffix = "",delay = 0 }) => (
   <div className="text-3xl md:text-4xl font-bold text-gradient-secondary mb-2">
     <CountUp 
       start={0} 
@@ -20,6 +20,7 @@ const AnimatedStat = ({ end, prefix = "", suffix = "" }) => (
       separator=","
       prefix={prefix}
       suffix={suffix}
+      delay = {delay}
     />
   </div>
 );
@@ -85,19 +86,19 @@ const Hero = () => {
           {/* ENHANCEMENT: Stats with Number Animation */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-white">
             <div>
-              <AnimatedStat end={500} suffix="+" />
+              <AnimatedStat end={500} suffix="+" delay={1.5} />
               <div className="text-gray-300 font-medium">Active Listings</div>
             </div>
             <div>
-              <AnimatedStat end={2.5} prefix="₹" suffix="B+" />
+              <AnimatedStat end={2.5} prefix="₹" suffix="B+" delay={1.8} />
               <div className="text-gray-300 font-medium">Properties Sold</div>
             </div>
             <div>
-              <AnimatedStat end={15} suffix="+" />
+              <AnimatedStat end={15} suffix="+" delay={1.9} />
               <div className="text-gray-300 font-medium">Years Experience</div>
             </div>
             <div>
-              <AnimatedStat end={98} suffix="%" />
+              <AnimatedStat end={98} suffix="%" delay={2}/>
               <div className="text-gray-300 font-medium">Client Satisfaction</div>
             </div>
           </div>
