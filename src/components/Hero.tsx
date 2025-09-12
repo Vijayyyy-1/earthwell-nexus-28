@@ -67,8 +67,8 @@ const Hero = () => {
           <Tabs defaultValue="purchase" className="w-full max-w-4xl mx-auto mb-12">
             <TabsList className="grid w-full grid-cols-3 bg-card/20 backdrop-blur-sm border border-border/20">
               <TabsTrigger value="purchase">Purchase</TabsTrigger>
-              <TabsTrigger value="rent">Rent</TabsTrigger>
-              <TabsTrigger value="sale">Sale</TabsTrigger>
+              <TabsTrigger value="rent" className="data-[state=inactive]:text-black">Rent</TabsTrigger>
+              <TabsTrigger value="sale" className="data-[state=inactive]:text-black">Sale</TabsTrigger>
             </TabsList>
             <TabsContent value="purchase">
               <SearchForm onSearch={handleSearch} />
