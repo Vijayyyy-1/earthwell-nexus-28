@@ -10,7 +10,8 @@ import {
   Eye,
   Heart,
   Share2,
-  Users
+  Users,
+  Check
 } from "lucide-react";
 import { Property } from "@/data/properties";
 
@@ -170,10 +171,12 @@ const isCompared = compareList.some(p => p.id === property.id);
             <Button
   size="sm"
   variant={isCompared ? "secondary" : "outline"}
-  className="border-secondary text-secondary hover:bg-secondary/10"
+  className={`flex items-center justify-center border-secondary text-secondary hover:bg-secondary/10 transition-all duration-300 ${
+    isCompared ? "bg-secondary text-white" : ""
+  }`}
   onClick={() => isCompared ? removeFromCompare(property.id) : addToCompare(property)}
 >
-  {isCompared ? "Remove" : "Compare"}
+  {isCompared ? <Check className="w-4 h-4" /> : "Compare"}
 </Button>
           </div>
         </div>

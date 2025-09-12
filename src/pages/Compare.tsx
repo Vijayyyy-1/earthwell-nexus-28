@@ -1,8 +1,8 @@
 import { useCompare } from "@/context/CompareContext";
 import { Button } from "@/components/ui/button";
-import { Property } from "@/data/properties"; // Assuming your Property interface also includes bed/bath
-import { MapPin, Square, Bed, Bath, CalendarDays, Percent, X } from "lucide-react"; // Added Bed, Bath, CalendarDays, Percent, X icons
-import { Badge } from "@/components/ui/badge"; // Assuming you have a Badge component or similar
+import { Property } from "@/data/properties"; 
+import { MapPin, Square, Bed, Bath, CalendarDays, Percent, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const Compare = () => {
   const { compareList, removeFromCompare, clearCompare } = useCompare();
@@ -22,6 +22,7 @@ const Compare = () => {
 
   return (
     <div className="container mx-auto px-4 py-12">
+      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-4xl font-extrabold text-foreground">Compare Properties</h1>
         <Button variant="destructive" size="sm" onClick={clearCompare} className="flex items-center gap-1">
@@ -29,12 +30,14 @@ const Compare = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-6">
+      {/* Compare Cards */}
+      <div className="flex flex-wrap justify-center gap-6 pb-6">
         {compareList.map((property: Property) => (
           <div
             key={property.id}
-            className="flex flex-col bg-card rounded-xl shadow-lg border border-border/20 overflow-hidden transition-all hover:shadow-xl"
+            className="flex flex-col bg-card rounded-xl shadow-lg border border-border/20 overflow-hidden transition-all hover:shadow-xl w-80"
           >
+            {/* Image */}
             <div className="relative h-52 overflow-hidden">
               <img
                 src={property.images[0]}
@@ -51,10 +54,13 @@ const Compare = () => {
                 <span className="sr-only">Remove {property.title}</span>
               </Button>
             </div>
+
+            {/* Card Content */}
             <div className="p-5 flex flex-col flex-grow">
               <h3 className="text-xl font-bold line-clamp-2 text-foreground mb-1">
                 {property.title}
               </h3>
+
               <div className="flex items-center text-muted-foreground text-sm mb-3">
                 <MapPin className="w-4 h-4 mr-1.5" />
                 {property.location.city}, {property.location.state}
@@ -67,7 +73,7 @@ const Compare = () => {
               <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm text-muted-foreground mb-4">
                 <div className="flex items-center">
                   <Bed className="w-4 h-4 mr-2 text-muted-foreground" />
-                  {property.likes|| 0} Beds
+                  {property.likes || 0} Beds
                 </div>
                 <div className="flex items-center">
                   <Bath className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -83,6 +89,7 @@ const Compare = () => {
                 </div>
               </div>
 
+              {/* Financials */}
               <div className="flex-grow">
                 <p className="font-semibold text-foreground mb-2">Financials & Details:</p>
                 <div className="space-y-1 text-sm text-muted-foreground">
@@ -90,10 +97,10 @@ const Compare = () => {
                     <Percent className="w-4 h-4 mr-2 text-muted-foreground" />
                     Cap Rate: <span className="font-medium text-foreground ml-1">{property.financials.capRate}%</span>
                   </div>
-                  {/* Add more financial details here if available */}
                 </div>
               </div>
 
+              {/* Amenities */}
               {property.amenities && property.amenities.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-border/30">
                   <p className="font-semibold text-foreground mb-2">Amenities:</p>
