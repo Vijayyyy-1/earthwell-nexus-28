@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useCompare } from "@/context/CompareContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +22,7 @@ import {
   TrendingUp,
   MapPin,
   Settings,
+  Heart,
   Zap,
 } from "lucide-react";
 import earthwellLogo from "@/assets/earthwell_logo.jpg";
@@ -29,6 +31,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const location = useLocation();
+  const { compareList } = useCompare(); // compareList will store liked/favorited properties
 
   const navigation = [
     { name: "Properties", href: "/properties", icon: Building2 },
@@ -134,6 +137,14 @@ const Header = () => {
 
             {/* CTA Button */}
             <div className="hidden lg:flex items-center space-x-4">
+              <Link to="/favorites" className="relative">
+                <Heart className="w-6 h-6 text-primary hover:text-red-500 transition-colors" />
+                {compareList.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {compareList.length}
+                  </span>
+                )}
+              </Link>
               <Button
                 onClick={() => setShowScheduleModal(true)}
                 className="bg-primary hover:bg-primary-muted text-primary-foreground px-8 py-3 font-medium shadow-subtle hover:shadow-card transition-luxury"
@@ -143,6 +154,7 @@ const Header = () => {
             </div>
 
             {/* Mobile Menu Button */}
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="lg:hidden p-2.5 rounded-lg hover:bg-primary-light/50 transition-luxury"

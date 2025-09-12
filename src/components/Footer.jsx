@@ -152,7 +152,8 @@ const Footer = () => {
                 <li className="flex items-start space-x-3">
                   <MapPin className="w-5 h-5 mt-1 text-[#c5a47e] flex-shrink-0" />
                   <span>
-                    Office No. 302, 3rd Floor, Town Square Shopping Center, Airport Rd, Viman Nagar, Pune – 411014
+                    Office No. 302, 3rd Floor, Town Square Shopping Center,
+                    Airport Rd, Viman Nagar, Pune – 411014
                   </span>
                 </li>
                 <li className="flex items-center space-x-3">
@@ -182,6 +183,10 @@ const Footer = () => {
                   />
                   <button
                     type="submit"
+                    style={{
+                      backgroundColor: "#df1414ff", // Tailwind's red-700
+                      color: "white",
+                    }}
                     className="bg-red-700  font-medium px-5 py-2.5 rounded-md sm:rounded-l-none mt-2 sm:mt-0
                                border border-transparent transition-all duration-300
                                hover:bg-white hover:text-red-700 hover:border-red-700"
@@ -201,11 +206,17 @@ const Footer = () => {
               © {currentYear} Earthwell Realty. All Rights Reserved.
             </p>
             <div className="flex items-center space-x-4">
-              <Link to="/privacy-policy" className="hover:text-[#c5a47e] transition-colors">
+              <Link
+                to="/privacy-policy"
+                className="hover:text-[#c5a47e] transition-colors"
+              >
                 Privacy Policy
               </Link>
               <span className="text-gray-400">|</span>
-              <Link to="/terms" className="hover:text-[#c5a47e] transition-colors">
+              <Link
+                to="/terms"
+                className="hover:text-[#c5a47e] transition-colors"
+              >
                 Terms
               </Link>
             </div>
@@ -221,7 +232,11 @@ const Footer = () => {
                     rounded-full bg-white shadow-lg text-gray-800
                     transition-all duration-300 ease-in-out transform
                     hover:bg-[#c5a47e] hover:text-black hover:scale-110
-                    ${isScrollButtonVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                    ${
+                      isScrollButtonVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-4"
+                    }`}
       >
         <ArrowUp className="w-5 h-5" />
       </button>

@@ -16,6 +16,7 @@ import { CompareProvider } from "@/context/CompareContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import Favorites from "./pages/Favorites";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => {
                 <Route path="/calculator" element={<Calculator />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/compare" element={<Compare />} />
+                <Route path="/favorites" element={<Favorites />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

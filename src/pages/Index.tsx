@@ -107,13 +107,21 @@ const Index = () => {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Column: Heading */}
             <div className="lg:col-span-4 text-center lg:text-left">
-              <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              <h2
+                className="text-4xl lg:text-5xl font-bold text-foreground mb-4"
+                data-aos="fade-right"
+                data-aos-duration="800"
+              >
                 Why Choose <br />{" "}
                 <span className="text-gradient-secondary">
                   Earthwell Realty
                 </span>
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p
+                className="text-lg text-muted-foreground"
+                data-aos="fade-left"
+                data-aos-delay="200"
+              >
                 Your trusted partner in achieving commercial real estate
                 success.
               </p>
@@ -124,6 +132,8 @@ const Index = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
+                  data-aos="fade-up"
+                  data-aos-delay={600 + index * 300} // wait for left col first, then stagger
                   className="group p-6 bg-card/40 rounded-xl border border-border/20 hover:border-primary/50 hover:bg-card/60 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="mb-4">{feature.icon}</div>
@@ -139,7 +149,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
       {/* CTA Section - **PREMIUM ENHANCEMENT** */}
       <section className="py-24">
         <div className="container mx-auto px-4">

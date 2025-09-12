@@ -2,16 +2,17 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCompare } from "@/context/CompareContext";
-import { 
-  MapPin, 
-  Square, 
+import { useState } from "react";
+import {
+  MapPin,
+  Square,
   Calendar,
   Building2,
   Eye,
   Heart,
   Share2,
   Users,
-  Check
+  Check,
 } from "lucide-react";
 import { Property } from "@/data/properties";
 
@@ -21,6 +22,19 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
+  // const [liked, setLiked] = useState(false);
+  // const [likes, setLikes] = useState(
+  //   property.likes ?? Math.floor(Math.random() * 50) + 10
+  // );
+
+  const toggleLike = () => {
+    if (isLiked) {
+      removeFromCompare(property.id);
+    } else {
+      addToCompare(property);
+    }
+  };
+
   // Format INR price (e.g., ₹1,30,00,00,000)
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -37,11 +51,15 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
 
   // --- FOMO Logic ---
   // Using optional chaining and nullish coalescing for robust data handling
-  const interestedCount = property.interested ?? Math.floor(Math.random() * 30) + 5;
+  const interestedCount =
+    property.interested ?? Math.floor(Math.random() * 30) + 5;
   const likesCount = property.likes ?? Math.floor(Math.random() * 50) + 10;
-  const isHotProperty = interestedCount > 20;
+  const isHotProperty = interestedCount > 400;
   const { compareList, addToCompare, removeFromCompare } = useCompare();
-const isCompared = compareList.some(p => p.id === property.id);
+  const isLiked = compareList.some((p) => p.id === property.id);
+  const isCompared = compareList.some((p) => p.id === property.id);
+  const baseLikes = property.likes ?? Math.floor(Math.random() * 50) + 10;
+  const displayedLikes = isLiked ? baseLikes + 1 : baseLikes;
 
   return (
     <div className="group relative bg-card rounded-xl overflow-hidden shadow-card hover:shadow-luxury transition-luxury border border-border/20 h-[520px] flex flex-col">
@@ -52,12 +70,21 @@ const isCompared = compareList.some(p => p.id === property.id);
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-luxury"
         />
-        
+
         {/* Overlay Actions */}
         <div className="absolute top-4 right-4 flex space-x-2">
-          <button className="p-2 rounded-full bg-card/80 backdrop-blur-sm hover:bg-card transition-smooth">
-            <Heart className="w-4 h-4 text-muted-foreground hover:text-primary" />
+          <button
+            onClick={toggleLike}
+            className="p-2 rounded-full bg-card/80 backdrop-blur-sm hover:bg-card transition-smooth"
+          >
+            <Heart
+              className={`w-4 h-4 transition-colors duration-300 ${
+                isLiked ? "text-red-500" : "text-muted-foreground"
+              }`}
+              fill={isLiked ? "currentColor" : "none"}
+            />
           </button>
+
           <button className="p-2 rounded-full bg-card/80 backdrop-blur-sm hover:bg-card transition-smooth">
             <Share2 className="w-4 h-4 text-muted-foreground hover:text-primary" />
           </button>
@@ -65,11 +92,13 @@ const isCompared = compareList.some(p => p.id === property.id);
 
         {/* Status Badge */}
         <div className="absolute top-4 left-4">
-          <Badge 
+          <Badge
             className={`capitalize font-medium ${
-              property.availability === 'available' ? 'bg-success/90 text-success-foreground' : 
-              property.availability === 'pending' ? 'bg-amber-500/90 text-amber-foreground' : 
-              'bg-secondary text-secondary-foreground'
+              property.availability === "available"
+                ? "bg-success/90 text-success-foreground"
+                : property.availability === "pending"
+                ? "bg-amber-500/90 text-amber-foreground"
+                : "bg-secondary text-secondary-foreground"
             }`}
           >
             {property.availability}
@@ -92,7 +121,10 @@ const isCompared = compareList.some(p => p.id === property.id);
       {/* Content */}
       <div className="p-4 flex flex-col flex-grow">
         <div className="flex items-center justify-between mb-3">
-          <Badge variant="secondary" className="capitalize bg-primary/10 text-primary border-primary/20">
+          <Badge
+            variant="secondary"
+            className="capitalize bg-primary/10 text-primary border-primary/20"
+          >
             {property.type}
           </Badge>
           <span className="text-xs text-muted-foreground">
@@ -129,55 +161,73 @@ const isCompared = compareList.some(p => p.id === property.id);
         {/* --- Enhanced FOMO Section --- */}
         <div className="mb-4 pt-3 border-t border-border/50">
           {isHotProperty && (
-            <Badge variant="destructive" className="animate-pulse mb-2.5 text-xs font-bold">
+            <Badge
+              variant="destructive"
+              className="animate-pulse mb-2.5 text-xs font-bold"
+            >
               🔥 In High Demand
             </Badge>
           )}
           <div className="flex items-center space-x-5 text-sm">
             <div className="flex items-center space-x-1.5 text-muted-foreground">
               <Heart className="w-4 h-4 text-red-500/80" />
-              <span className="font-semibold text-foreground">{likesCount}</span>
+              <span className="font-semibold text-foreground">
+                {displayedLikes}
+              </span>
               <span>Likes</span>
             </div>
             <div className="flex items-center space-x-1.5 text-muted-foreground">
               <Users className="w-4 h-4 text-blue-500/80" />
-              <span className="font-semibold text-foreground">{interestedCount}</span>
+              <span className="font-semibold text-foreground">
+                {interestedCount}
+              </span>
               <span>watching</span>
             </div>
           </div>
         </div>
-        
+
         {/* Footer with Price and Actions */}
         <div className="flex items-center justify-between mt-auto">
           <div>
             <p className="text-xl font-bold text-foreground">
               {formatPrice(property.price)}
             </p>
-            <p className="text-xs text-muted-foreground">
-              Price
-            </p>
+            <p className="text-xs text-muted-foreground">Price</p>
           </div>
           <div className="flex space-x-2">
-            <Button asChild variant="outline" size="icon" className="border-primary/20 text-primary hover:bg-primary/5">
-                <Link to={`/property/${property.id}`} aria-label="View Details">
-                    <Eye className="w-4 h-4" />
-                </Link>
-            </Button>
-            <Button asChild size="icon" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link to="/contact" aria-label="Schedule a Viewing">
-                    <Calendar className="w-4 h-4" />
-                </Link>
+            <Button
+              asChild
+              variant="outline"
+              size="icon"
+              className="border-primary/20 text-primary hover:bg-primary/5"
+            >
+              <Link to={`/property/${property.id}`} aria-label="View Details">
+                <Eye className="w-4 h-4" />
+              </Link>
             </Button>
             <Button
-  size="sm"
-  variant={isCompared ? "secondary" : "outline"}
-  className={`flex items-center justify-center border-secondary text-secondary hover:bg-secondary/10 transition-all duration-300 ${
-    isCompared ? "bg-secondary text-white" : ""
-  }`}
-  onClick={() => isCompared ? removeFromCompare(property.id) : addToCompare(property)}
->
-  {isCompared ? <Check className="w-4 h-4" /> : "Compare"}
-</Button>
+              asChild
+              size="icon"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground"
+            >
+              <Link to="/contact" aria-label="Schedule a Viewing">
+                <Calendar className="w-4 h-4" />
+              </Link>
+            </Button>
+            <Button
+              size="sm"
+              variant={isCompared ? "secondary" : "outline"}
+              className={`flex items-center justify-center border-secondary text-secondary hover:bg-secondary/10 transition-all duration-300 ${
+                isCompared ? "bg-secondary text-white" : ""
+              }`}
+              onClick={() =>
+                isCompared
+                  ? removeFromCompare(property.id)
+                  : addToCompare(property)
+              }
+            >
+              {isCompared ? <Check className="w-4 h-4" /> : "Compare"}
+            </Button>
           </div>
         </div>
       </div>
