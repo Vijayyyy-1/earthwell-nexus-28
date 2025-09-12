@@ -18,6 +18,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Favorites from "./pages/Favorites";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => {
         <PropertyProvider>
           <CompareProvider>
             <BrowserRouter>
+              <ScrollToTop />
               <div className="min-h-screen bg-background text-foreground">
                 <Header />
                 <Routes>
