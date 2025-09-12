@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCompare } from "@/context/CompareContext";
-import { useState } from "react";
+import { useProperty } from "@/context/PropertyContext";
 import {
   MapPin,
   Square,
@@ -22,44 +22,35 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
-  // const [liked, setLiked] = useState(false);
-  // const [likes, setLikes] = useState(
-  //   property.likes ?? Math.floor(Math.random() * 50) + 10
-  // );
+  const { favorites, addToFavorites, removeFromFavorites } = useProperty();
+  const { compareList, addToCompare, removeFromCompare } = useCompare();
 
-  const toggleLike = () => {
-    if (isLiked) {
-      removeFromCompare(property.id);
-    } else {
-      addToCompare(property);
-    }
+  const isFavorited = favorites.some((p) => p.id === property.id);
+  const isCompared = compareList.some((p) => p.id === property.id);
+
+  const toggleFavorite = () => {
+    if (isFavorited) removeFromFavorites(property.id);
+    else addToFavorites(property);
   };
 
-  // Format INR price (e.g., ₹1,30,00,00,000)
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-IN", {
+  // Format INR price
+  const formatPrice = (price: number) =>
+    new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency: "INR",
       maximumFractionDigits: 0,
     }).format(price);
-  };
 
-  // Format square feet with commas (e.g., 65,000)
-  const formatSqft = (sqft: number) => {
-    return new Intl.NumberFormat("en-IN").format(sqft);
-  };
+  // Format sqft
+  const formatSqft = (sqft: number) =>
+    new Intl.NumberFormat("en-IN").format(sqft);
 
-  // --- FOMO Logic ---
-  // Using optional chaining and nullish coalescing for robust data handling
+  // FOMO / Likes / Watching
   const interestedCount =
     property.interested ?? Math.floor(Math.random() * 30) + 5;
   const likesCount = property.likes ?? Math.floor(Math.random() * 50) + 10;
+  const displayedLikes = isFavorited ? likesCount + 1 : likesCount;
   const isHotProperty = interestedCount > 400;
-  const { compareList, addToCompare, removeFromCompare } = useCompare();
-  const isLiked = compareList.some((p) => p.id === property.id);
-  const isCompared = compareList.some((p) => p.id === property.id);
-  const baseLikes = property.likes ?? Math.floor(Math.random() * 50) + 10;
-  const displayedLikes = isLiked ? baseLikes + 1 : baseLikes;
 
   return (
     <div className="group relative bg-card rounded-xl overflow-hidden shadow-card hover:shadow-luxury transition-luxury border border-border/20 h-[520px] flex flex-col">
@@ -74,14 +65,14 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
         {/* Overlay Actions */}
         <div className="absolute top-4 right-4 flex space-x-2">
           <button
-            onClick={toggleLike}
+            onClick={toggleFavorite}
             className="p-2 rounded-full bg-card/80 backdrop-blur-sm hover:bg-card transition-smooth"
           >
             <Heart
               className={`w-4 h-4 transition-colors duration-300 ${
-                isLiked ? "text-red-500" : "text-muted-foreground"
+                isFavorited ? "text-red-500" : "text-muted-foreground"
               }`}
-              fill={isLiked ? "currentColor" : "none"}
+              fill={isFavorited ? "currentColor" : "none"}
             />
           </button>
 
@@ -158,7 +149,7 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
           </div>
         </div>
 
-        {/* --- Enhanced FOMO Section --- */}
+        {/* FOMO Section */}
         <div className="mb-4 pt-3 border-t border-border/50">
           {isHotProperty && (
             <Badge
@@ -186,7 +177,7 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
           </div>
         </div>
 
-        {/* Footer with Price and Actions */}
+        {/* Footer with Actions */}
         <div className="flex items-center justify-between mt-auto">
           <div>
             <p className="text-xl font-bold text-foreground">
