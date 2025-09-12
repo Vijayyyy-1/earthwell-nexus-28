@@ -8,7 +8,7 @@ import warehouse from "@/assets/warehouse-industrial.jpg";
 export interface Property {
   id: string;
   title: string;
-  type: 'office' | 'retail' | 'industrial' | 'warehouse';
+  type: "office" | "retail" | "industrial" | "warehouse";
   price: number; // Price in INR
   sqft: number;
   location: {
@@ -25,7 +25,7 @@ export interface Property {
   zoning: string;
   yearBuilt: number;
   parkingSpaces: number;
-  availability: 'available' | 'leased' | 'pending';
+  availability: "available" | "leased" | "pending";
   listingDate: string;
   agent: {
     name: string;
@@ -43,8 +43,10 @@ export interface Property {
     leaseEnd: string;
     sqft: number;
   }[];
-   likes?: number;
+  likes?: number;
   interested?: number;
+  beds?: number;
+  baths?: number;
 }
 
 export const mockProperties: Property[] = [
@@ -59,12 +61,23 @@ export const mockProperties: Property[] = [
       city: "Mumbai",
       state: "Maharashtra",
       zip: "400051",
-      coordinates: [72.8601, 19.0664]
+      coordinates: [72.8601, 19.0664],
     },
-    images:  [officeBuilding1, heroBuilding],
-    description: "A Grade-A office building in Mumbai's premier financial district, BKC. Offers spectacular views, modern amenities, and proximity to major corporate headquarters.",
-    features: ["LEED Gold Certified", "Floor-to-ceiling Windows", "Destination Control Elevators", "24/7 Power Backup"],
-    amenities: ["Rooftop Cafeteria", "Valet Parking", "Fitness Center", "Business Lounge"],
+    images: [officeBuilding1, heroBuilding],
+    description:
+      "A Grade-A office building in Mumbai's premier financial district, BKC. Offers spectacular views, modern amenities, and proximity to major corporate headquarters.",
+    features: [
+      "LEED Gold Certified",
+      "Floor-to-ceiling Windows",
+      "Destination Control Elevators",
+      "24/7 Power Backup",
+    ],
+    amenities: [
+      "Rooftop Cafeteria",
+      "Valet Parking",
+      "Fitness Center",
+      "Business Lounge",
+    ],
     zoning: "Commercial Office",
     yearBuilt: 2019,
     parkingSpaces: 250,
@@ -73,20 +86,22 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Rohan Mehra",
       phone: "+91 98200 98200",
-      email: "rohan.mehra@earthwellrealty.in"
+      email: "rohan.mehra@earthwellrealty.in",
     },
     financials: {
       capRate: 7.5,
       noi: 97500000,
       grossIncome: 125000000,
-      expenses: 27500000
+      expenses: 27500000,
     },
     tenants: [
       { name: "Global Investment Bank", leaseEnd: "2029-12-31", sqft: 20000 },
-      { name: "Innovate Fintech", leaseEnd: "2027-08-31", sqft: 15000 }
+      { name: "Innovate Fintech", leaseEnd: "2027-08-31", sqft: 15000 },
     ],
     likes: 42,
-  interested: 15,
+    interested: 15,
+    beds: 3,
+    baths: 3,
   },
   {
     id: "prop-102",
@@ -99,12 +114,23 @@ export const mockProperties: Property[] = [
       city: "Bengaluru",
       state: "Karnataka",
       zip: "560034",
-      coordinates: [77.6245, 12.9345]
+      coordinates: [77.6245, 12.9345],
     },
-    images:  [retailCenter],
-    description: "Premium retail property in the heart of Bengaluru's trendiest neighborhood. High foot traffic and visibility, perfect for flagship stores and international brands.",
-    features: ["Excellent Frontage", "High Ceilings", "Modern Glass Facade", "Ample Signage Space"],
-    amenities: ["Basement Parking", "24/7 Security", "Power Backup", "Customer Lift"],
+    images: [retailCenter],
+    description:
+      "Premium retail property in the heart of Bengaluru's trendiest neighborhood. High foot traffic and visibility, perfect for flagship stores and international brands.",
+    features: [
+      "Excellent Frontage",
+      "High Ceilings",
+      "Modern Glass Facade",
+      "Ample Signage Space",
+    ],
+    amenities: [
+      "Basement Parking",
+      "24/7 Security",
+      "Power Backup",
+      "Customer Lift",
+    ],
     zoning: "Commercial Retail",
     yearBuilt: 2017,
     parkingSpaces: 80,
@@ -113,16 +139,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Anjali Rao",
       phone: "+91 99000 99000",
-      email: "anjali.rao@earthwellrealty.in"
+      email: "anjali.rao@earthwellrealty.in",
     },
     financials: {
       capRate: 8.0,
       noi: 36000000,
       grossIncome: 48000000,
-      expenses: 12000000
+      expenses: 12000000,
     },
     likes: 1042,
-  interested: 115,
+    interested: 115,
   },
   {
     id: "prop-103",
@@ -135,12 +161,23 @@ export const mockProperties: Property[] = [
       city: "Pune",
       state: "Maharashtra",
       zip: "410501",
-      coordinates: [73.8118, 18.7493]
+      coordinates: [73.8118, 18.7493],
     },
     images: [warehouse],
-    description: "State-of-the-art warehousing facility in Pune's prime industrial belt. Excellent connectivity to Mumbai-Pune Expressway and major manufacturing hubs.",
-    features: ["36 ft Clear Height", "50 Loading Docks with Levelers", "ESFR Sprinkler System", "Insulated Roofing"],
-    amenities: ["Truck Parking Bay", "Office & Admin Block", "24/7 Security Cabin", "Weighbridge"],
+    description:
+      "State-of-the-art warehousing facility in Pune's prime industrial belt. Excellent connectivity to Mumbai-Pune Expressway and major manufacturing hubs.",
+    features: [
+      "36 ft Clear Height",
+      "50 Loading Docks with Levelers",
+      "ESFR Sprinkler System",
+      "Insulated Roofing",
+    ],
+    amenities: [
+      "Truck Parking Bay",
+      "Office & Admin Block",
+      "24/7 Security Cabin",
+      "Weighbridge",
+    ],
     zoning: "Industrial",
     yearBuilt: 2021,
     parkingSpaces: 100,
@@ -149,19 +186,23 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Vikram Patil",
       phone: "+91 98500 98500",
-      email: "vikram.patil@earthwellrealty.in"
+      email: "vikram.patil@earthwellrealty.in",
     },
     financials: {
       capRate: 8.5,
       noi: 72250000,
       grossIncome: 90000000,
-      expenses: 17750000
+      expenses: 17750000,
     },
     tenants: [
-      { name: "Express Logistics Pvt. Ltd.", leaseEnd: "2030-06-30", sqft: 250000 }
+      {
+        name: "Express Logistics Pvt. Ltd.",
+        leaseEnd: "2030-06-30",
+        sqft: 250000,
+      },
     ],
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-104",
@@ -174,12 +215,23 @@ export const mockProperties: Property[] = [
       city: "Gurugram",
       state: "Haryana",
       zip: "122002",
-      coordinates: [77.0883, 28.4944]
+      coordinates: [77.0883, 28.4944],
     },
-    images: [heroImg, officeBuilding1],
-    description: "A landmark office building in India's foremost IT and business district. Home to Fortune 500 companies, offering world-class infrastructure and connectivity.",
-    features: ["IGBC Platinum Rated", "Centralized HVAC", "100% Power Backup", "Fiber Optic Connectivity"],
-    amenities: ["Multi-cuisine Food Court", "Ample Parking", "Day Care Center", "Shuttle Service to Metro"],
+    images: [heroImg],
+    description:
+      "A landmark office building in India's foremost IT and business district. Home to Fortune 500 companies, offering world-class infrastructure and connectivity.",
+    features: [
+      "IGBC Platinum Rated",
+      "Centralized HVAC",
+      "100% Power Backup",
+      "Fiber Optic Connectivity",
+    ],
+    amenities: [
+      "Multi-cuisine Food Court",
+      "Ample Parking",
+      "Day Care Center",
+      "Shuttle Service to Metro",
+    ],
     zoning: "IT Park/SEZ",
     yearBuilt: 2016,
     parkingSpaces: 400,
@@ -188,16 +240,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Priya Singh",
       phone: "+91 98100 98100",
-      email: "priya.singh@earthwellrealty.in"
+      email: "priya.singh@earthwellrealty.in",
     },
     financials: {
       capRate: 7.8,
       noi: 85800000,
       grossIncome: 112000000,
-      expenses: 26200000
+      expenses: 26200000,
     },
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-105",
@@ -210,12 +262,23 @@ export const mockProperties: Property[] = [
       city: "Hyderabad",
       state: "Telangana",
       zip: "500078",
-      coordinates: [78.5898, 17.6253]
+      coordinates: [78.5898, 17.6253],
     },
     images: [warehouse],
-    description: "Specialized industrial facility in Hyderabad's premier biotech and pharma hub. Equipped with R&D labs and cleanroom-ready areas.",
-    features: ["Effluent Treatment Plant (ETP)", "High Power Sanction", "Zero Discharge Compliance", "Material Handling Systems"],
-    amenities: ["Admin Office Block", "Quality Control Lab", "Staff Quarters", "Secure Perimeter"],
+    description:
+      "Specialized industrial facility in Hyderabad's premier biotech and pharma hub. Equipped with R&D labs and cleanroom-ready areas.",
+    features: [
+      "Effluent Treatment Plant (ETP)",
+      "High Power Sanction",
+      "Zero Discharge Compliance",
+      "Material Handling Systems",
+    ],
+    amenities: [
+      "Admin Office Block",
+      "Quality Control Lab",
+      "Staff Quarters",
+      "Secure Perimeter",
+    ],
     zoning: "Industrial - Pharma",
     yearBuilt: 2018,
     parkingSpaces: 120,
@@ -224,16 +287,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Suresh Reddy",
       phone: "+91 99490 99490",
-      email: "suresh.reddy@earthwellrealty.in"
+      email: "suresh.reddy@earthwellrealty.in",
     },
     financials: {
       capRate: 8.2,
       noi: 49200000,
       grossIncome: 65000000,
-      expenses: 15800000
+      expenses: 15800000,
     },
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-106",
@@ -246,12 +309,23 @@ export const mockProperties: Property[] = [
       city: "Chennai",
       state: "Tamil Nadu",
       zip: "600119",
-      coordinates: [80.2294, 12.8943]
+      coordinates: [80.2294, 12.8943],
     },
     images: [heroBuilding],
-    description: "Modern IT park on Chennai's famed IT corridor. Features large, efficient floor plates ideal for technology and BPO companies.",
-    features: ["Scalable Office Spaces", "Redundant Power Supply", "High-Speed Internet", "Ample Natural Light"],
-    amenities: ["Large Food Court", "Gymnasium", "Indoor Games", "Extensive Landscaping"],
+    description:
+      "Modern IT park on Chennai's famed IT corridor. Features large, efficient floor plates ideal for technology and BPO companies.",
+    features: [
+      "Scalable Office Spaces",
+      "Redundant Power Supply",
+      "High-Speed Internet",
+      "Ample Natural Light",
+    ],
+    amenities: [
+      "Large Food Court",
+      "Gymnasium",
+      "Indoor Games",
+      "Extensive Landscaping",
+    ],
     zoning: "IT Park/Commercial",
     yearBuilt: 2020,
     parkingSpaces: 500,
@@ -260,19 +334,19 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Karthik Raja",
       phone: "+91 98400 98400",
-      email: "karthik.raja@earthwellrealty.in"
+      email: "karthik.raja@earthwellrealty.in",
     },
     financials: {
       capRate: 7.9,
       noi: 75050000,
       grossIncome: 98000000,
-      expenses: 22950000
+      expenses: 22950000,
     },
     tenants: [
-      { name: "Cognizant Solutions", leaseEnd: "2028-10-31", sqft: 40000 }
+      { name: "Cognizant Solutions", leaseEnd: "2028-10-31", sqft: 40000 },
     ],
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-107",
@@ -285,12 +359,23 @@ export const mockProperties: Property[] = [
       city: "Kolkata",
       state: "West Bengal",
       zip: "700016",
-      coordinates: [88.3533, 22.5533]
+      coordinates: [88.3533, 22.5533],
     },
     images: [retailCenter],
-    description: "An iconic heritage building offering prime retail space on Kolkata's most prestigious high street. A rare opportunity for luxury brands.",
-    features: ["Heritage Architecture", "High Footfall Zone", "Excellent Store Visibility", "Ground Floor Access"],
-    amenities: ["Valet Service", "Restored Interiors", "Modern Utilities", "Security Personnel"],
+    description:
+      "An iconic heritage building offering prime retail space on Kolkata's most prestigious high street. A rare opportunity for luxury brands.",
+    features: [
+      "Heritage Architecture",
+      "High Footfall Zone",
+      "Excellent Store Visibility",
+      "Ground Floor Access",
+    ],
+    amenities: [
+      "Valet Service",
+      "Restored Interiors",
+      "Modern Utilities",
+      "Security Personnel",
+    ],
     zoning: "Prime Commercial",
     yearBuilt: 1940, // Renovated 2022
     parkingSpaces: 30,
@@ -299,16 +384,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Aditi Bannerjee",
       phone: "+91 98300 98300",
-      email: "aditi.b@earthwellrealty.in"
+      email: "aditi.b@earthwellrealty.in",
     },
     financials: {
       capRate: 7.0,
       noi: 49000000,
       grossIncome: 65000000,
-      expenses: 16000000
+      expenses: 16000000,
     },
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-108",
@@ -321,12 +406,23 @@ export const mockProperties: Property[] = [
       city: "Thane",
       state: "Maharashtra",
       zip: "421302",
-      coordinates: [73.0583, 19.2982]
+      coordinates: [73.0583, 19.2982],
     },
     images: [warehouse, heroImg],
-    description: "A massive, state-of-the-art warehousing and fulfillment center in India's largest logistics hub. Ideal for e-commerce and large-scale distribution.",
-    features: ["PEB Structure", "40 ft Eave Height", "FM2 Compliant Flooring", "Multiple Dock Doors"],
-    amenities: ["Drivers' Rest Area", "Canteen Facility", "Automated Fire Safety", "CCTV Surveillance"],
+    description:
+      "A massive, state-of-the-art warehousing and fulfillment center in India's largest logistics hub. Ideal for e-commerce and large-scale distribution.",
+    features: [
+      "PEB Structure",
+      "40 ft Eave Height",
+      "FM2 Compliant Flooring",
+      "Multiple Dock Doors",
+    ],
+    amenities: [
+      "Drivers' Rest Area",
+      "Canteen Facility",
+      "Automated Fire Safety",
+      "CCTV Surveillance",
+    ],
     zoning: "Logistics Park",
     yearBuilt: 2022,
     parkingSpaces: 200,
@@ -335,16 +431,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Rohan Mehra",
       phone: "+91 98200 98200",
-      email: "rohan.mehra@earthwellrealty.in"
+      email: "rohan.mehra@earthwellrealty.in",
     },
     financials: {
       capRate: 9.0,
       noi: 103500000,
       grossIncome: 125000000,
-      expenses: 21500000
+      expenses: 21500000,
     },
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-109",
@@ -357,12 +453,23 @@ export const mockProperties: Property[] = [
       city: "Ahmedabad",
       state: "Gujarat",
       zip: "380054",
-      coordinates: [72.5152, 23.0381]
+      coordinates: [72.5152, 23.0381],
     },
     images: [officeBuilding1],
-    description: "A modern commercial building on Ahmedabad's main arterial road, offering office and retail spaces with excellent connectivity.",
-    features: ["Impressive Glass Facade", "Energy Efficient Design", "Flexible Office Layouts", "High-Speed Elevators"],
-    amenities: ["Multi-level Parking", "Cafeteria", "Professional Building Management", "24/7 Security"],
+    description:
+      "A modern commercial building on Ahmedabad's main arterial road, offering office and retail spaces with excellent connectivity.",
+    features: [
+      "Impressive Glass Facade",
+      "Energy Efficient Design",
+      "Flexible Office Layouts",
+      "High-Speed Elevators",
+    ],
+    amenities: [
+      "Multi-level Parking",
+      "Cafeteria",
+      "Professional Building Management",
+      "24/7 Security",
+    ],
     zoning: "Commercial",
     yearBuilt: 2018,
     parkingSpaces: 150,
@@ -371,16 +478,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Amit Patel",
       phone: "+91 98250 98250",
-      email: "amit.patel@earthwellrealty.in"
+      email: "amit.patel@earthwellrealty.in",
     },
     financials: {
       capRate: 7.5,
       noi: 41250000,
       grossIncome: 54000000,
-      expenses: 12750000
+      expenses: 12750000,
     },
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-110",
@@ -393,12 +500,23 @@ export const mockProperties: Property[] = [
       city: "Noida",
       state: "Uttar Pradesh",
       zip: "201301",
-      coordinates: [77.3739, 28.6252]
+      coordinates: [77.3739, 28.6252],
     },
     images: [warehouse],
-    description: "Fully equipped manufacturing facility in a well-established industrial sector of Noida. Suitable for electronics, automotive, or FMCG production.",
-    features: ["Heavy Duty Flooring", "Multiple Crane Bays", "High Power Connection", "Loading Bays"],
-    amenities: ["Administrative Building", "Workers Canteen", "Tool Room", "Ample Open Space"],
+    description:
+      "Fully equipped manufacturing facility in a well-established industrial sector of Noida. Suitable for electronics, automotive, or FMCG production.",
+    features: [
+      "Heavy Duty Flooring",
+      "Multiple Crane Bays",
+      "High Power Connection",
+      "Loading Bays",
+    ],
+    amenities: [
+      "Administrative Building",
+      "Workers Canteen",
+      "Tool Room",
+      "Ample Open Space",
+    ],
     zoning: "Industrial Manufacturing",
     yearBuilt: 2015,
     parkingSpaces: 80,
@@ -407,16 +525,16 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Priya Singh",
       phone: "+91 98100 98100",
-      email: "priya.singh@earthwellrealty.in"
+      email: "priya.singh@earthwellrealty.in",
     },
     financials: {
       capRate: 8.8,
       noi: 66000000,
       grossIncome: 82000000,
-      expenses: 16000000
+      expenses: 16000000,
     },
     likes: 42,
-  interested: 15,
+    interested: 15,
   },
   {
     id: "prop-111",
@@ -429,12 +547,23 @@ export const mockProperties: Property[] = [
       city: "Pune",
       state: "Maharashtra",
       zip: "411057",
-      coordinates: [73.7411, 18.5912]
+      coordinates: [73.7411, 18.5912],
     },
     images: [heroBuilding, officeBuilding1],
-    description: "Prime office space within Pune's largest IT hub. The building is part of a larger campus with extensive amenities and a professional environment.",
-    features: ["Plug-and-Play Option", "Large Floor Plates", "SEZ Benefits", "Excellent Connectivity"],
-    amenities: ["Campus Food Court", "Internal Shuttle Service", "Sports Facilities", "Amphitheater"],
+    description:
+      "Prime office space within Pune's largest IT hub. The building is part of a larger campus with extensive amenities and a professional environment.",
+    features: [
+      "Plug-and-Play Option",
+      "Large Floor Plates",
+      "SEZ Benefits",
+      "Excellent Connectivity",
+    ],
+    amenities: [
+      "Campus Food Court",
+      "Internal Shuttle Service",
+      "Sports Facilities",
+      "Amphitheater",
+    ],
     zoning: "SEZ/IT Park",
     yearBuilt: 2017,
     parkingSpaces: 300,
@@ -443,18 +572,17 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Vikram Patil",
       phone: "+91 98500 98500",
-      email: "vikram.patil@earthwellrealty.in"
+      email: "vikram.patil@earthwellrealty.in",
     },
     financials: {
       capRate: 8.0,
       noi: 54400000,
       grossIncome: 69000000,
-      expenses: 14600000
+      expenses: 14600000,
     },
-    tenants: [
-      { name: "Infosys Limited", leaseEnd: "2031-03-31", sqft: 90000 }
-    ],likes: 42,
-  interested: 15,
+    tenants: [{ name: "Infosys Limited", leaseEnd: "2031-03-31", sqft: 90000 }],
+    likes: 42,
+    interested: 15,
   },
   {
     id: "prop-112",
@@ -467,12 +595,23 @@ export const mockProperties: Property[] = [
       city: "Jaipur",
       state: "Rajasthan",
       zip: "302018",
-      coordinates: [75.7873, 26.9124]
+      coordinates: [75.7873, 26.9124],
     },
     images: [retailCenter, warehouse],
-    description: "A unique property combining a large retail showroom on the ground floor with warehousing space at the rear. Ideal for furniture, automotive, or electronics businesses.",
-    features: ["Main Road Frontage", "High Visibility", "Separate Access for Warehouse", "Goods Lift"],
-    amenities: ["Customer Parking", "Staff Area", "Loading/Unloading Bay", "Office Space"],
+    description:
+      "A unique property combining a large retail showroom on the ground floor with warehousing space at the rear. Ideal for furniture, automotive, or electronics businesses.",
+    features: [
+      "Main Road Frontage",
+      "High Visibility",
+      "Separate Access for Warehouse",
+      "Goods Lift",
+    ],
+    amenities: [
+      "Customer Parking",
+      "Staff Area",
+      "Loading/Unloading Bay",
+      "Office Space",
+    ],
     zoning: "Commercial",
     yearBuilt: 2019,
     parkingSpaces: 50,
@@ -481,35 +620,36 @@ export const mockProperties: Property[] = [
     agent: {
       name: "Arjun Singh",
       phone: "+91 98290 98290",
-      email: "arjun.singh@earthwellrealty.in"
+      email: "arjun.singh@earthwellrealty.in",
     },
     financials: {
       capRate: 7.6,
       noi: 19000000,
       grossIncome: 24000000,
-      expenses: 5000000
+      expenses: 5000000,
     },
     likes: 42,
-  interested: 15,
-  }
+    interested: 15,
+  },
 ];
 
 export const getPropertyById = (id: string): Property | undefined => {
-  return mockProperties.find(property => property.id === id);
+  return mockProperties.find((property) => property.id === id);
 };
 
 export const getPropertiesByType = (type: string): Property[] => {
-  if (type === 'all') return mockProperties;
-  return mockProperties.filter(property => property.type === type);
+  if (type === "all") return mockProperties;
+  return mockProperties.filter((property) => property.type === type);
 };
 
 export const searchProperties = (query: string): Property[] => {
   const searchTerm = query.toLowerCase();
-  return mockProperties.filter(property =>
-    property.title.toLowerCase().includes(searchTerm) ||
-    property.type.toLowerCase().includes(searchTerm) ||
-    property.location.city.toLowerCase().includes(searchTerm) ||
-    property.location.state.toLowerCase().includes(searchTerm) ||
-    property.description.toLowerCase().includes(searchTerm)
+  return mockProperties.filter(
+    (property) =>
+      property.title.toLowerCase().includes(searchTerm) ||
+      property.type.toLowerCase().includes(searchTerm) ||
+      property.location.city.toLowerCase().includes(searchTerm) ||
+      property.location.state.toLowerCase().includes(searchTerm) ||
+      property.description.toLowerCase().includes(searchTerm)
   );
 };

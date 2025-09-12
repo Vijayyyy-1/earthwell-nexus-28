@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Calculator, 
-  DollarSign, 
-  TrendingUp, 
+import {
+  Calculator,
+  TrendingUp,
   PieChart,
   Download,
-  Share2
+  IndianRupee,
+  Share2,
 } from "lucide-react";
 
 interface CalculationResults {
@@ -27,56 +33,74 @@ interface CalculationResults {
 }
 
 const ROICalculator = () => {
-  const [purchasePrice, setPurchasePrice] = useState<number>(1000000);
-  const [downPayment, setDownPayment] = useState<number>(200000);
-  const [interestRate, setInterestRate] = useState<number>(6.5);
-  const [loanTerm, setLoanTerm] = useState<number>(25);
-  const [monthlyRent, setMonthlyRent] = useState<number>(8500);
-  const [monthlyExpenses, setMonthlyExpenses] = useState<number>(2500);
-  const [vacancyRate, setVacancyRate] = useState<number>(5);
-  const [propertyTaxRate, setPropertyTaxRate] = useState<number>(1.2);
-  
+  // ✅ keep as string for inputs
+  const [purchasePrice, setPurchasePrice] = useState<string>("1000000");
+  const [downPayment, setDownPayment] = useState<string>("200000");
+  const [interestRate, setInterestRate] = useState<string>("6.5");
+  const [loanTerm, setLoanTerm] = useState<string>("25");
+  const [monthlyRent, setMonthlyRent] = useState<string>("8500");
+  const [monthlyExpenses, setMonthlyExpenses] = useState<string>("2500");
+  const [vacancyRate, setVacancyRate] = useState<string>("5");
+  const [propertyTaxRate, setPropertyTaxRate] = useState<string>("1.2");
+
   const [results, setResults] = useState<CalculationResults | null>(null);
 
   const calculateROI = () => {
-    const loanAmount = purchasePrice - downPayment;
-    const monthlyInterestRate = interestRate / 100 / 12;
-    const numberOfPayments = loanTerm * 12;
-    
-    // Monthly payment calculation
-    const monthlyPayment = loanAmount * 
-      (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) /
-      (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
-    
-    const totalInterest = (monthlyPayment * numberOfPayments) - loanAmount;
-    
-    // Rental income calculations
-    const effectiveMonthlyRent = monthlyRent * (1 - vacancyRate / 100);
+    // ✅ safely parse numbers
+    const purchasePriceNum = Number(purchasePrice) || 0;
+    const downPaymentNum = Number(downPayment) || 0;
+    const interestRateNum = Number(interestRate) || 0;
+    const loanTermNum = Number(loanTerm) || 0;
+    const monthlyRentNum = Number(monthlyRent) || 0;
+    const monthlyExpensesNum = Number(monthlyExpenses) || 0;
+    const vacancyRateNum = Number(vacancyRate) || 0;
+    const propertyTaxRateNum = Number(propertyTaxRate) || 0;
+
+    const loanAmount = purchasePriceNum - downPaymentNum;
+    const monthlyInterestRate = interestRateNum / 100 / 12;
+    const numberOfPayments = loanTermNum * 12;
+
+    // Monthly payment
+    const monthlyPayment =
+      loanAmount > 0 && monthlyInterestRate > 0
+        ? (loanAmount *
+            (monthlyInterestRate *
+              Math.pow(1 + monthlyInterestRate, numberOfPayments))) /
+          (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1)
+        : 0;
+
+    const totalInterest = monthlyPayment * numberOfPayments - loanAmount;
+
+    // Rental income
+    const effectiveMonthlyRent = monthlyRentNum * (1 - vacancyRateNum / 100);
     const annualRent = effectiveMonthlyRent * 12;
-    
-    // Property taxes and total expenses
-    const monthlyPropertyTax = (purchasePrice * propertyTaxRate / 100) / 12;
-    const totalMonthlyExpenses = monthlyExpenses + monthlyPropertyTax + monthlyPayment;
-    
-    // Cash flow and returns
+
+    // Taxes & expenses
+    const monthlyPropertyTax =
+      (purchasePriceNum * propertyTaxRateNum) / 100 / 12;
+    const totalMonthlyExpenses =
+      monthlyExpensesNum + monthlyPropertyTax + monthlyPayment;
+
+    // Cash flow
     const monthlyCashFlow = effectiveMonthlyRent - totalMonthlyExpenses;
     const annualCashFlow = monthlyCashFlow * 12;
-    
-    // Cap rate (if purchased in cash)
-    const noi = annualRent - (monthlyExpenses + monthlyPropertyTax) * 12;
-    const capRate = (noi / purchasePrice) * 100;
-    
-    // ROI on cash invested
-    const cashInvested = downPayment + (purchasePrice * 0.05); // Assume 5% closing costs
-    const roi = (annualCashFlow / cashInvested) * 100;
-    
-    // Break-even point
-    const breakEvenPoint = monthlyExpenses + monthlyPayment + monthlyPropertyTax;
-    
-    // Total return calculation (5-year projection)
+
+    // NOI & cap rate
+    const noi = annualRent - (monthlyExpensesNum + monthlyPropertyTax) * 12;
+    const capRate = purchasePriceNum ? (noi / purchasePriceNum) * 100 : 0;
+
+    // ROI
+    const cashInvested = downPaymentNum + purchasePriceNum * 0.05;
+    const roi = cashInvested ? (annualCashFlow / cashInvested) * 100 : 0;
+
+    // Break-even
+    const breakEvenPoint =
+      monthlyExpensesNum + monthlyPayment + monthlyPropertyTax;
+
+    // 5-year projection
     const totalReturn = annualCashFlow * 5;
 
-    const calculationResults: CalculationResults = {
+    setResults({
       monthlyPayment,
       totalInterest,
       monthlyRent: effectiveMonthlyRent,
@@ -85,20 +109,27 @@ const ROICalculator = () => {
       cashFlow: monthlyCashFlow,
       roi,
       breakEvenPoint,
-      totalReturn
-    };
-
-    setResults(calculationResults);
+      totalReturn,
+    });
   };
 
   useEffect(() => {
     calculateROI();
-  }, [purchasePrice, downPayment, interestRate, loanTerm, monthlyRent, monthlyExpenses, vacancyRate, propertyTaxRate]);
+  }, [
+    purchasePrice,
+    downPayment,
+    interestRate,
+    loanTerm,
+    monthlyRent,
+    monthlyExpenses,
+    vacancyRate,
+    propertyTaxRate,
+  ]);
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
@@ -119,7 +150,8 @@ const ROICalculator = () => {
           <h1 className="text-4xl font-bold text-foreground">ROI Calculator</h1>
         </div>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Analyze the investment potential of commercial properties with our comprehensive ROI calculator
+          Analyze the investment potential of commercial properties with our
+          comprehensive ROI calculator
         </p>
       </div>
 
@@ -129,7 +161,7 @@ const ROICalculator = () => {
           <Card className="shadow-card border-border/20">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
-                <DollarSign className="w-5 h-5 text-primary" />
+                <IndianRupee className="w-5 h-5 text-primary" />
                 <span>Property Details</span>
               </CardTitle>
               <CardDescription>
@@ -142,7 +174,8 @@ const ROICalculator = () => {
                   <TabsTrigger value="property">Property</TabsTrigger>
                   <TabsTrigger value="financing">Financing</TabsTrigger>
                 </TabsList>
-                
+
+                {/* Property Tab */}
                 <TabsContent value="property" className="space-y-4">
                   <div>
                     <Label htmlFor="purchasePrice">Purchase Price</Label>
@@ -150,33 +183,33 @@ const ROICalculator = () => {
                       id="purchasePrice"
                       type="number"
                       value={purchasePrice}
-                      onChange={(e) => setPurchasePrice(Number(e.target.value))}
+                      onChange={(e) => setPurchasePrice(e.target.value)}
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="monthlyRent">Monthly Rent</Label>
                     <Input
                       id="monthlyRent"
                       type="number"
                       value={monthlyRent}
-                      onChange={(e) => setMonthlyRent(Number(e.target.value))}
+                      onChange={(e) => setMonthlyRent(e.target.value)}
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="monthlyExpenses">Monthly Expenses</Label>
                     <Input
                       id="monthlyExpenses"
                       type="number"
                       value={monthlyExpenses}
-                      onChange={(e) => setMonthlyExpenses(Number(e.target.value))}
+                      onChange={(e) => setMonthlyExpenses(e.target.value)}
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="vacancyRate">Vacancy Rate (%)</Label>
                     <Input
@@ -184,11 +217,11 @@ const ROICalculator = () => {
                       type="number"
                       step="0.1"
                       value={vacancyRate}
-                      onChange={(e) => setVacancyRate(Number(e.target.value))}
+                      onChange={(e) => setVacancyRate(e.target.value)}
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="propertyTax">Property Tax Rate (%)</Label>
                     <Input
@@ -196,12 +229,13 @@ const ROICalculator = () => {
                       type="number"
                       step="0.1"
                       value={propertyTaxRate}
-                      onChange={(e) => setPropertyTaxRate(Number(e.target.value))}
+                      onChange={(e) => setPropertyTaxRate(e.target.value)}
                       className="mt-1"
                     />
                   </div>
                 </TabsContent>
-                
+
+                {/* Financing Tab */}
                 <TabsContent value="financing" className="space-y-4">
                   <div>
                     <Label htmlFor="downPayment">Down Payment</Label>
@@ -209,11 +243,11 @@ const ROICalculator = () => {
                       id="downPayment"
                       type="number"
                       value={downPayment}
-                      onChange={(e) => setDownPayment(Number(e.target.value))}
+                      onChange={(e) => setDownPayment(e.target.value)}
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="interestRate">Interest Rate (%)</Label>
                     <Input
@@ -221,24 +255,24 @@ const ROICalculator = () => {
                       type="number"
                       step="0.1"
                       value={interestRate}
-                      onChange={(e) => setInterestRate(Number(e.target.value))}
+                      onChange={(e) => setInterestRate(e.target.value)}
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="loanTerm">Loan Term (Years)</Label>
                     <Input
                       id="loanTerm"
                       type="number"
                       value={loanTerm}
-                      onChange={(e) => setLoanTerm(Number(e.target.value))}
+                      onChange={(e) => setLoanTerm(e.target.value)}
                       className="mt-1"
                     />
                   </div>
                 </TabsContent>
               </Tabs>
-              
+
               <div className="flex space-x-3 pt-4">
                 <Button variant="luxury" className="flex-1">
                   <Download className="w-4 h-4 mr-2" />
@@ -264,15 +298,32 @@ const ROICalculator = () => {
                       <CardTitle className="text-sm font-medium text-muted-foreground">
                         Monthly Cash Flow
                       </CardTitle>
-                      <TrendingUp className={`w-4 h-4 ${results.cashFlow >= 0 ? 'text-success' : 'text-destructive'}`} />
+                      <TrendingUp
+                        className={`w-4 h-4 ${
+                          results.cashFlow >= 0
+                            ? "text-success"
+                            : "text-destructive"
+                        }`}
+                      />
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className={`text-2xl font-bold ${results.cashFlow >= 0 ? 'text-success' : 'text-destructive'}`}>
+                    <div
+                      className={`text-2xl font-bold ${
+                        results.cashFlow >= 0
+                          ? "text-success"
+                          : "text-destructive"
+                      }`}
+                    >
                       {formatCurrency(results.cashFlow)}
                     </div>
-                    <Badge variant={results.cashFlow >= 0 ? "default" : "destructive"} className="mt-2">
-                      {results.cashFlow >= 0 ? 'Positive' : 'Negative'} Flow
+                    <Badge
+                      variant={
+                        results.cashFlow >= 0 ? "default" : "destructive"
+                      }
+                      className="mt-2"
+                    >
+                      {results.cashFlow >= 0 ? "Positive" : "Negative"} Flow
                     </Badge>
                   </CardContent>
                 </Card>
@@ -291,7 +342,11 @@ const ROICalculator = () => {
                       {formatPercentage(results.capRate)}
                     </div>
                     <Badge variant="secondary" className="mt-2">
-                      {results.capRate >= 6 ? 'Strong' : results.capRate >= 4 ? 'Fair' : 'Weak'}
+                      {results.capRate >= 6
+                        ? "Strong"
+                        : results.capRate >= 4
+                        ? "Fair"
+                        : "Weak"}
                     </Badge>
                   </CardContent>
                 </Card>
@@ -302,15 +357,30 @@ const ROICalculator = () => {
                       <CardTitle className="text-sm font-medium text-muted-foreground">
                         Cash-on-Cash ROI
                       </CardTitle>
-                      <TrendingUp className={`w-4 h-4 ${results.roi >= 0 ? 'text-success' : 'text-destructive'}`} />
+                      <TrendingUp
+                        className={`w-4 h-4 ${
+                          results.roi >= 0 ? "text-success" : "text-destructive"
+                        }`}
+                      />
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className={`text-2xl font-bold ${results.roi >= 0 ? 'text-success' : 'text-destructive'}`}>
+                    <div
+                      className={`text-2xl font-bold ${
+                        results.roi >= 0 ? "text-success" : "text-destructive"
+                      }`}
+                    >
                       {formatPercentage(results.roi)}
                     </div>
-                    <Badge variant={results.roi >= 8 ? "default" : "outline"} className="mt-2">
-                      {results.roi >= 8 ? 'Excellent' : results.roi >= 4 ? 'Good' : 'Poor'}
+                    <Badge
+                      variant={results.roi >= 8 ? "default" : "outline"}
+                      className="mt-2"
+                    >
+                      {results.roi >= 8
+                        ? "Excellent"
+                        : results.roi >= 4
+                        ? "Good"
+                        : "Poor"}
                     </Badge>
                   </CardContent>
                 </Card>
@@ -327,36 +397,60 @@ const ROICalculator = () => {
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h4 className="font-semibold text-foreground">Monthly Breakdown</h4>
+                      <h4 className="font-semibold text-foreground">
+                        Monthly Breakdown
+                      </h4>
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Effective Rent:</span>
+                          <span className="text-muted-foreground">
+                            Effective Rent:
+                          </span>
                           <span className="font-medium text-success">
                             {formatCurrency(results.monthlyRent)}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Mortgage Payment:</span>
+                          <span className="text-muted-foreground">
+                            Mortgage Payment:
+                          </span>
                           <span className="font-medium text-destructive">
                             -{formatCurrency(results.monthlyPayment)}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Operating Expenses:</span>
+                          <span className="text-muted-foreground">
+                            Operating Expenses:
+                          </span>
                           <span className="font-medium text-destructive">
-                            -{formatCurrency(monthlyExpenses)}
+                            -{formatCurrency(Number(monthlyExpenses) || 0)}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Property Taxes:</span>
+                          <span className="text-muted-foreground">
+                            Property Taxes:
+                          </span>
                           <span className="font-medium text-destructive">
-                            -{formatCurrency((purchasePrice * propertyTaxRate / 100) / 12)}
+                            -
+                            {formatCurrency(
+                              ((Number(purchasePrice) || 0) *
+                                (Number(propertyTaxRate) || 0)) /
+                                100 /
+                                12
+                            )}
                           </span>
                         </div>
                         <div className="pt-3 border-t border-border/20">
                           <div className="flex justify-between">
-                            <span className="font-semibold text-foreground">Net Cash Flow:</span>
-                            <span className={`font-bold ${results.cashFlow >= 0 ? 'text-success' : 'text-destructive'}`}>
+                            <span className="font-semibold text-foreground">
+                              Net Cash Flow:
+                            </span>
+                            <span
+                              className={`font-bold ${
+                                results.cashFlow >= 0
+                                  ? "text-success"
+                                  : "text-destructive"
+                              }`}
+                            >
                               {formatCurrency(results.cashFlow)}
                             </span>
                           </div>
@@ -365,35 +459,56 @@ const ROICalculator = () => {
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="font-semibold text-foreground">Investment Summary</h4>
+                      <h4 className="font-semibold text-foreground">
+                        Investment Summary
+                      </h4>
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Total Investment:</span>
+                          <span className="text-muted-foreground">
+                            Total Investment:
+                          </span>
                           <span className="font-medium">
-                            {formatCurrency(downPayment + (purchasePrice * 0.05))}
+                            {formatCurrency(
+                              (Number(downPayment) || 0) +
+                                (Number(purchasePrice) || 0) * 0.05
+                            )}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Annual Income:</span>
+                          <span className="text-muted-foreground">
+                            Annual Income:
+                          </span>
                           <span className="font-medium text-success">
                             {formatCurrency(results.annualRent)}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Annual Cash Flow:</span>
-                          <span className={`font-medium ${results.cashFlow * 12 >= 0 ? 'text-success' : 'text-destructive'}`}>
+                          <span className="text-muted-foreground">
+                            Annual Cash Flow:
+                          </span>
+                          <span
+                            className={`font-medium ${
+                              results.cashFlow * 12 >= 0
+                                ? "text-success"
+                                : "text-destructive"
+                            }`}
+                          >
                             {formatCurrency(results.cashFlow * 12)}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Break-even Rent:</span>
+                          <span className="text-muted-foreground">
+                            Break-even Rent:
+                          </span>
                           <span className="font-medium">
                             {formatCurrency(results.breakEvenPoint)}
                           </span>
                         </div>
                         <div className="pt-3 border-t border-border/20">
                           <div className="flex justify-between">
-                            <span className="font-semibold text-foreground">5-Year Projection:</span>
+                            <span className="font-semibold text-foreground">
+                              5-Year Projection:
+                            </span>
                             <span className="font-bold text-secondary">
                               {formatCurrency(results.totalReturn)}
                             </span>

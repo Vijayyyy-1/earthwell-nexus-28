@@ -3,28 +3,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // ENHANCEMENT: Import Tabs and Select components from your UI library
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Search, MapPin, Building2, ArrowRight } from "lucide-react";
 
 // ENHANCEMENT: Import your video file
-import heroVideo from "@/assets/hero.mp4"; 
+import heroVideo from "@/assets/hero.mp4";
 // ENHANCEMENT (Optional): Add a library for number animations
 import CountUp from "react-countup";
 
-const AnimatedStat = ({ end, prefix = "", suffix = "",delay = 0 }) => (
+const AnimatedStat = ({ end, prefix = "", suffix = "", delay = 0 }) => (
   <div className="text-3xl md:text-4xl font-bold text-gradient-secondary mb-2">
-    <CountUp 
-      start={0} 
-      end={end} 
-      duration={2.75} 
+    <CountUp
+      start={0}
+      end={end}
+      duration={2.75}
       separator=","
       prefix={prefix}
       suffix={suffix}
-      delay = {delay}
+      delay={delay}
     />
   </div>
 );
-
 
 const Hero = () => {
   const [location, setLocation] = useState("");
@@ -59,17 +64,36 @@ const Hero = () => {
             <br />
             <span className="text-gradient-secondary">Commercial Property</span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-gray-200 mb-12 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-            Discover exceptional office spaces, retail locations, and industrial properties that drive business success.
+            Discover exceptional office spaces, retail locations, and industrial
+            properties that drive business success.
           </p>
 
           {/* ENHANCEMENT: Tab-based Search Bar */}
-          <Tabs defaultValue="purchase" className="w-full max-w-4xl mx-auto mb-12">
+          <Tabs
+            defaultValue="purchase"
+            className="w-full max-w-4xl mx-auto mb-12"
+          >
             <TabsList className="grid w-full grid-cols-3 bg-card/20 backdrop-blur-sm border border-border/20">
-              <TabsTrigger value="purchase">Purchase</TabsTrigger>
-              <TabsTrigger value="rent" className="data-[state=inactive]:text-black">Rent</TabsTrigger>
-              <TabsTrigger value="sale" className="data-[state=inactive]:text-black">Sale</TabsTrigger>
+              <TabsTrigger
+                value="purchase"
+                className="data-[state=inactive]:text-black"
+              >
+                Purchase
+              </TabsTrigger>
+              <TabsTrigger
+                value="rent"
+                className="data-[state=inactive]:text-black"
+              >
+                Rent
+              </TabsTrigger>
+              <TabsTrigger
+                value="sale"
+                className="data-[state=inactive]:text-black"
+              >
+                Sale
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="purchase">
               <SearchForm onSearch={handleSearch} />
@@ -81,7 +105,6 @@ const Hero = () => {
               <SearchForm onSearch={handleSearch} />
             </TabsContent>
           </Tabs>
-
 
           {/* ENHANCEMENT: Stats with Number Animation */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-white">
@@ -98,8 +121,10 @@ const Hero = () => {
               <div className="text-gray-300 font-medium">Years Experience</div>
             </div>
             <div>
-              <AnimatedStat end={98} suffix="%" delay={2}/>
-              <div className="text-gray-300 font-medium">Client Satisfaction</div>
+              <AnimatedStat end={98} suffix="%" delay={2} />
+              <div className="text-gray-300 font-medium">
+                Client Satisfaction
+              </div>
             </div>
           </div>
         </div>
@@ -128,24 +153,29 @@ const SearchForm = ({ onSearch }) => {
           </div>
         </div>
         <div className="md:col-span-5">
-           <Select>
-              <SelectTrigger className="h-14 bg-background border-border text-lg text-muted-foreground">
-                <div className="flex items-center gap-3">
-                  <Building2 className="w-5 h-5" />
-                  <SelectValue placeholder="Select Property Type" />
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="office">Office Space</SelectItem>
-                <SelectItem value="retail">Retail Location</SelectItem>
-                <SelectItem value="industrial">Industrial Property</SelectItem>
-                <SelectItem value="warehouse">Warehouse</SelectItem>
-                <SelectItem value="land">Commercial Land</SelectItem>
-              </SelectContent>
-            </Select>
+          <Select>
+            <SelectTrigger className="h-14 bg-background border-border text-lg text-muted-foreground">
+              <div className="flex items-center gap-3">
+                <Building2 className="w-5 h-5" />
+                <SelectValue placeholder="Select Property Type" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="office">Office Space</SelectItem>
+              <SelectItem value="retail">Retail Location</SelectItem>
+              <SelectItem value="industrial">Industrial Property</SelectItem>
+              <SelectItem value="warehouse">Warehouse</SelectItem>
+              <SelectItem value="land">Commercial Land</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="md:col-span-3">
-          <Button variant="hero" size="xl" onClick={onSearch} className="w-full h-14 text-lg">
+          <Button
+            variant="hero"
+            size="xl"
+            onClick={onSearch}
+            className="w-full h-14 text-lg"
+          >
             <Search className="w-5 h-5 mr-2" />
             Search
           </Button>
@@ -154,6 +184,5 @@ const SearchForm = ({ onSearch }) => {
     </div>
   );
 };
-
 
 export default Hero;
