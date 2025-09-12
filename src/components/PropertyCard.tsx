@@ -1,20 +1,18 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCompare } from "@/context/CompareContext";
 import { 
   MapPin, 
   Square, 
-  DollarSign, 
   Calendar,
   Building2,
   Eye,
   Heart,
-  Share2
+  Share2,
+  Users
 } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
 import { Property } from "@/data/properties";
-import officeBuilding1 from "@/assets/office-building-1.jpg";
-import heroBuilding from "@/assets/hero-commercial-building.jpg";
 
 interface PropertyCardProps {
   property: Property;
@@ -22,22 +20,30 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
+  // Format INR price (e.g., ₹1,30,00,00,000)
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
       maximumFractionDigits: 0,
     }).format(price);
   };
 
+  // Format square feet with commas (e.g., 65,000)
   const formatSqft = (sqft: number) => {
-    return new Intl.NumberFormat('en-US').format(sqft);
+    return new Intl.NumberFormat("en-IN").format(sqft);
   };
 
+  // --- FOMO Logic ---
+  // Using optional chaining and nullish coalescing for robust data handling
+  const interestedCount = property.interested ?? Math.floor(Math.random() * 30) + 5;
+  const likesCount = property.likes ?? Math.floor(Math.random() * 50) + 10;
+  const isHotProperty = interestedCount > 20;
+  const { compareList, addToCompare, removeFromCompare } = useCompare();
+const isCompared = compareList.some(p => p.id === property.id);
+
   return (
-    <div className="group relative bg-card rounded-xl overflow-hidden shadow-card hover:shadow-luxury transition-luxury border border-border/20 h-[500px] flex flex-col"
-    >
+    <div className="group relative bg-card rounded-xl overflow-hidden shadow-card hover:shadow-luxury transition-luxury border border-border/20 h-[520px] flex flex-col">
       {/* Image */}
       <div className="relative overflow-hidden h-48 flex-shrink-0">
         <img
@@ -58,8 +64,14 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
 
         {/* Status Badge */}
         <div className="absolute top-4 left-4">
-          <Badge className="bg-success/90 text-success-foreground font-medium">
-            Available
+          <Badge 
+            className={`capitalize font-medium ${
+              property.availability === 'available' ? 'bg-success/90 text-success-foreground' : 
+              property.availability === 'pending' ? 'bg-amber-500/90 text-amber-foreground' : 
+              'bg-secondary text-secondary-foreground'
+            }`}
+          >
+            {property.availability}
           </Badge>
         </div>
 
@@ -70,7 +82,7 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
               {formatPrice(property.price)}
             </div>
             <div className="text-sm text-muted-foreground">
-              ${Math.round(property.price / property.sqft)}/sq ft
+              {formatPrice(Math.round(property.price / property.sqft))}/sq ft
             </div>
           </div>
         </div>
@@ -98,37 +110,71 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 mb-4 text-sm flex-grow">
+        <div className="grid grid-cols-2 gap-2 mb-4">
           <div className="flex items-center">
-            <Square className="w-4 h-4 mr-1 text-secondary" />
+            <Square className="w-4 h-4 mr-1.5 text-secondary" />
             <span className="font-medium">
               {formatSqft(property.sqft)} sq ft
             </span>
           </div>
           <div className="flex items-center">
-            <DollarSign className="w-4 h-4 mr-1 text-secondary" />
+            <Building2 className="w-4 h-4 mr-1.5 text-secondary" />
             <span className="font-medium">
-              {property.financials.capRate}% Cap
+              {property.financials.capRate}% Cap Rate
             </span>
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-border mt-auto">
+        {/* --- Enhanced FOMO Section --- */}
+        <div className="mb-4 pt-3 border-t border-border/50">
+          {isHotProperty && (
+            <Badge variant="destructive" className="animate-pulse mb-2.5 text-xs font-bold">
+              🔥 In High Demand
+            </Badge>
+          )}
+          <div className="flex items-center space-x-5 text-sm">
+            <div className="flex items-center space-x-1.5 text-muted-foreground">
+              <Heart className="w-4 h-4 text-red-500/80" />
+              <span className="font-semibold text-foreground">{likesCount}</span>
+              <span>Likes</span>
+            </div>
+            <div className="flex items-center space-x-1.5 text-muted-foreground">
+              <Users className="w-4 h-4 text-blue-500/80" />
+              <span className="font-semibold text-foreground">{interestedCount}</span>
+              <span>watching</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Footer with Price and Actions */}
+        <div className="flex items-center justify-between mt-auto">
           <div>
             <p className="text-xl font-bold text-foreground">
-              ${(property.price / 1000000).toFixed(1)}M
+              {formatPrice(property.price)}
             </p>
             <p className="text-xs text-muted-foreground">
-              ${Math.round(property.price / property.sqft)}/sq ft
+              Price
             </p>
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" size="sm" className="border-primary/20 text-primary hover:bg-primary/5">
-              <Eye className="w-4 h-4" />
+            <Button asChild variant="outline" size="icon" className="border-primary/20 text-primary hover:bg-primary/5">
+                <Link to={`/property/${property.id}`} aria-label="View Details">
+                    <Eye className="w-4 h-4" />
+                </Link>
             </Button>
-            <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Calendar className="w-4 h-4" />
+            <Button asChild size="icon" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Link to="/contact" aria-label="Schedule a Viewing">
+                    <Calendar className="w-4 h-4" />
+                </Link>
             </Button>
+            <Button
+  size="sm"
+  variant={isCompared ? "secondary" : "outline"}
+  className="border-secondary text-secondary hover:bg-secondary/10"
+  onClick={() => isCompared ? removeFromCompare(property.id) : addToCompare(property)}
+>
+  {isCompared ? "Remove" : "Compare"}
+</Button>
           </div>
         </div>
       </div>

@@ -10,6 +10,9 @@ import Search from "./pages/Search";
 import Calculator from "./pages/Calculator";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Footer from "./components/Footer";
+import Compare from "./pages/Compare";
+import { CompareProvider } from "@/context/CompareContext";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +21,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <CompareProvider> 
       <BrowserRouter>
         <div className="min-h-screen bg-background text-foreground">
           <Header />
@@ -27,11 +31,14 @@ const App = () => (
             <Route path="/search" element={<Search />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/compare" element={<Compare />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Footer/>
         </div>
       </BrowserRouter>
+      </CompareProvider> 
     </TooltipProvider>
   </QueryClientProvider>
 );

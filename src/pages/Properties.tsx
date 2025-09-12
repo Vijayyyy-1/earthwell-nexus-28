@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import PropertyCard from "@/components/PropertyCard";
 import { mockProperties, Property } from "@/data/properties";
+import CompareButton from "@/components/CompareButton";
 import { 
   Search, 
   Filter, 
@@ -319,6 +320,7 @@ const Properties = () => {
           </div>
         )}
       </div>
+      <CompareButton />
     </div>
   );
 };

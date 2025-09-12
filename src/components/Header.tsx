@@ -23,7 +23,7 @@ import {
   Settings,
   Zap
 } from "lucide-react";
-import earthwellLogo from "@/assets/earthwell-logo-exact.png";
+import earthwellLogo from "@/assets/earthwell_logo.jpg";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +38,7 @@ const Header = () => {
   ];
 
   const services = [
+    { name: "Compare", icon: Calculator },
     { name: "Advisory", icon: Briefcase },
     { name: "Lease Transaction", icon: FileText },
     { name: "Sales Transaction", icon: TrendingUp },
@@ -67,8 +68,8 @@ const Header = () => {
               <h1 className="text-xl font-semibold text-primary" style={{ fontFamily: 'Playfair Display, serif' }}>
                 Earthwell Realty
               </h1>
-              <p className="text-xs text-muted-foreground uppercase tracking-widest font-light">
-                Commercial Real Estate
+              <p className="text-xs text-muted-foreground  tracking-widest font-light">
+                a2z in Properties & Services
               </p>
             </div>
           </Link>
@@ -81,10 +82,10 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`flex items-center space-x-2 px-5 py-2.5 rounded-lg transition-luxury font-medium ${
+                  className={`flex items-center space-x-2 px-5 py-2.5 rounded-lg transition-luxury font-base ${
                     isActive(item.href)
                       ? "text-primary bg-primary-light border border-primary/10"
-                      : "text-muted-foreground hover:text-primary hover:bg-primary-light/50"
+                      : "text-black hover:text-primary hover:bg-primary-light/50"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -94,32 +95,36 @@ const Header = () => {
             })}
             
             {/* Services Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="flex items-center space-x-2 px-5 py-2.5 text-muted-foreground hover:text-primary hover:bg-primary-light/50 font-medium"
-                >
-                  <Briefcase className="w-4 h-4" />
-                  <span>Services</span>
-                  <ChevronDown className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-60 bg-card border border-border shadow-luxury p-2">
-                {services.map((service) => {
-                  const ServiceIcon = service.icon;
-                  return (
-                    <DropdownMenuItem
-                      key={service.name}
-                      className="flex items-center space-x-3 px-4 py-3 hover:bg-primary-light cursor-pointer rounded-lg transition-luxury"
-                    >
-                      <ServiceIcon className="w-4 h-4 text-primary" />
-                      <span className="font-medium">{service.name}</span>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Services Dropdown */}
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button
+      variant="ghost"
+      className="flex items-center space-x-2 px-5 py-2.5 text-black hover:text-primary hover:bg-primary-light/50 font-medium"
+    >
+      <Briefcase className="w-4 h-4" />
+      <span>Services</span>
+      <ChevronDown className="w-4 h-4" />
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end" className="w-60 bg-card border border-border shadow-luxury p-2">
+    {services.map((service) => {
+      const ServiceIcon = service.icon;
+      return (
+        <Link
+          key={service.name}
+          to={service.name === "Compare" ? "/compare" : "#"} // <-- redirect Compare to /compare
+        >
+          <DropdownMenuItem className="flex items-center space-x-3 px-4 py-3 hover:bg-primary-light cursor-pointer rounded-lg transition-luxury">
+            <ServiceIcon className="w-4 h-4 text-primary" />
+            <span className="font-medium">{service.name}</span>
+          </DropdownMenuItem>
+        </Link>
+      );
+    })}
+  </DropdownMenuContent>
+</DropdownMenu>
+
           </nav>
 
           {/* CTA Button */}
