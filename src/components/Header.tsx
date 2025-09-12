@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useCompare } from "@/context/CompareContext";
+import { useProperty } from "@/context/PropertyContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +33,7 @@ const Header = () => {
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const location = useLocation();
   const { compareList } = useCompare(); // compareList will store liked/favorited properties
+  const { favorites } = useProperty(); // <-- dynamic subscription
 
   const navigation = [
     { name: "Properties", href: "/properties", icon: Building2 },
@@ -139,9 +141,9 @@ const Header = () => {
             <div className="hidden lg:flex items-center space-x-4">
               <Link to="/favorites" className="relative">
                 <Heart className="w-6 h-6 text-primary hover:text-red-500 transition-colors" />
-                {compareList.length > 0 && (
+                {favorites.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {compareList.length}
+                    {favorites.length}
                   </span>
                 )}
               </Link>
