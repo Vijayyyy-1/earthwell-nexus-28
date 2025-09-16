@@ -11,6 +11,8 @@ import {
   X,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import DemoChatbot from "@/components/DemoChatbot";
+import ReactMarkdown from "react-markdown";
 
 const Compare = () => {
   const { compareList, removeFromCompare, clearCompare } = useCompare();
@@ -142,6 +144,7 @@ const Compare = () => {
           </div>
         ))}
       </div>
+      <DemoChatbot compareList={compareList} />
     </div>
   );
 };
