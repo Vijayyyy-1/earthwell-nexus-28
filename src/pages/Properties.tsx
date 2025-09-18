@@ -53,18 +53,18 @@ const Properties = () => {
       let matchesPrice = true;
       if (priceRange !== "all") {
         switch (priceRange) {
-          case "under-5m":
+          case "under-5cr":
             matchesPrice = property.price < 5000000;
             break;
-          case "5m-10m":
+          case "5cr-10cr": // fixed key (no space)
             matchesPrice =
               property.price >= 5000000 && property.price < 10000000;
             break;
-          case "10m-20m":
+          case "10cr-20cr":
             matchesPrice =
-              property.price >= 10000000 && property.price < 20000000;
+              property.price >= 10000000 && property.price < 280000000;
             break;
-          case "over-20m":
+          case "over-20cr":
             matchesPrice = property.price >= 20000000;
             break;
         }
@@ -73,7 +73,7 @@ const Properties = () => {
       return matchesSearch && matchesType && matchesLocation && matchesPrice;
     });
 
-    // Sort properties
+    // Sorting logic (unchanged)
     switch (sortBy) {
       case "price-low":
         filtered.sort((a, b) => a.price - b.price);
@@ -110,10 +110,10 @@ const Properties = () => {
 
   const priceRanges = [
     { value: "all", label: "Any Price" },
-    { value: "under-5m", label: "Under $5M" },
-    { value: "5m-10m", label: "$5M - $10M" },
-    { value: "10m-20m", label: "$10M - $20M" },
-    { value: "over-20m", label: "Over $20M" },
+    { value: "under-5cr", label: "Under 5cr" },
+    { value: "5cr-10cr", label: "₹5cr - ₹10cr" },
+    { value: "10cr-20cr", label: "₹10cr - ₹20cr" },
+    { value: "over-20cr", label: "Over ₹20cr" },
   ];
 
   const sortOptions = [
