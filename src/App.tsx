@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import Compare from "./pages/Compare";
+import AboutUsPage from "./pages/about-us";
 import { CompareProvider } from "@/context/CompareContext";
 import { PropertyProvider } from "@/context/PropertyContext";
 import AOS from "aos";
@@ -52,6 +53,7 @@ const App = () => {
                   <Route path="/compare" element={<Compare />} />
                   <Route path="/favorites" element={<Favorites />} />
                   <Route path="/property/:id" element={<PropertyPage />} />
+                  <Route path="/about-us" element={<AboutUsPage />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
