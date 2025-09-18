@@ -24,6 +24,7 @@ import {
   MapPin,
   Settings,
   Heart,
+  Users,
   Zap,
 } from "lucide-react";
 import earthwellLogo from "@/assets/earthwell_logo.jpg";
@@ -37,13 +38,15 @@ const Header = () => {
 
   const navigation = [
     { name: "Properties", href: "/properties", icon: Building2 },
-    { name: "Search", href: "/search", icon: Search },
-    { name: "ROI Calculator", href: "/calculator", icon: Calculator },
+    { name: "About Us", href: "/about", icon: Users },
+    // { name: "Search", href: "/search", icon: Search },
+    // { name: "ROI Calculator", href: "/calculator", icon: Calculator },
     { name: "Contact", href: "/contact", icon: Phone },
   ];
 
   const services = [
-    { name: "Compare", icon: Calculator },
+    { name: "ROI Calculator", href: "/calculator", icon: Calculator },
+    { name: "Compare", href: "/compare", icon: Calculator },
     { name: "Advisory", icon: Briefcase },
     { name: "Lease Transaction", icon: FileText },
     { name: "Sales Transaction", icon: TrendingUp },
@@ -124,7 +127,7 @@ const Header = () => {
                     return (
                       <Link
                         key={service.name}
-                        to={service.name === "Compare" ? "/compare" : "#"} // <-- redirect Compare to /compare
+                        to={service.href || "#"} // <-- redirect Compare to /compare
                       >
                         <DropdownMenuItem className="flex items-center space-x-3 px-4 py-3 hover:bg-primary-light cursor-pointer rounded-lg transition-luxury">
                           <ServiceIcon className="w-4 h-4 text-primary" />
@@ -147,12 +150,12 @@ const Header = () => {
                   </span>
                 )}
               </Link>
-              <Button
+              {/* <Button
                 onClick={() => setShowScheduleModal(true)}
                 className="bg-primary hover:bg-primary-muted text-primary-foreground px-8 py-3 font-medium shadow-subtle hover:shadow-card transition-luxury"
               >
                 Schedule Visit
-              </Button>
+              </Button> */}
             </div>
 
             {/* Mobile Menu Button */}

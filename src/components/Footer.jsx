@@ -69,14 +69,14 @@ const Footer = () => {
         {/* MAP BANNER with hover zoom effect */}
         <div className="w-full h-64 md:h-80 relative overflow-hidden group">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.325021200378!2d73.9143923153634!3d18.55833408738596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c140272a19e5%3A0x290e20d6f5f5e975!2sTown%20Square%20Shopping%20Centre!5e0!3m2!1sen!2sin!4v1663162817478!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.1197775215105!2d73.90455077423861!3d18.56863796770607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c147addaaaab%3A0x21b56fdc67680c34!2sEarthwell%20Realty%20Private%20Limited!5e0!3m2!1sen!2sin!4v1758193107201!5m2!1sen!2sin"
             width="100%"
-            height="100%"
+            height="500px"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="grayscale contrast-125 opacity-70 transition-transform duration-500 ease-in-out group-hover:scale-105"
+            className="w-full h-72 md:h-96 lg:h-[400px] grayscale contrast-125 opacity-75"
           ></iframe>
           {/* Enhanced gradient overlay for text pop */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#f8f5f2] via-[#f8f5f2]/90 to-transparent"></div>

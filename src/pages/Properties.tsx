@@ -313,8 +313,8 @@ const Properties = () => {
             {filteredAndSortedProperties.map((property, index) => (
               <div
                 key={property.id}
-                data-aos="fade-up"
-                data-aos-delay={index * 100} // stagger nicely
+                // data-aos="fade-up"
+                // data-aos-delay={index * 100} // stagger nicely
                 className="rounded-2xl border border-border bg-card shadow-md transition-transform duration-300 hover:shadow-xl hover:scale-[1.02]"
               >
                 <PropertyCard
@@ -350,7 +350,7 @@ const Properties = () => {
       <div className="fixed bottom-20 right-24 z-50">
         <CompareButton />
       </div>
-      <DemoChatbot />
+      {/* <DemoChatbot /> */}
     </div>
   );
 };

@@ -66,7 +66,7 @@ const Index = () => {
               <p
                 className="text-lg text-muted-foreground max-w-xl"
                 data-aos="fade-up"
-                data-aos-delay="300"
+                data-aos-delay="200"
               >
                 Explore our premium selection of commercial real estate
                 opportunities.
@@ -78,7 +78,7 @@ const Index = () => {
                 size="lg"
                 className="flex-shrink-0"
                 data-aos="fade-left"
-                data-aos-delay="300"
+                data-aos-delay="200"
               >
                 View All Properties
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
@@ -110,7 +110,8 @@ const Index = () => {
               <h2
                 className="text-4xl lg:text-5xl font-bold text-foreground mb-4"
                 data-aos="fade-right"
-                data-aos-duration="800"
+                data-aos-duration="1000"
+                data-aos-easing="ease-out-cubic"
               >
                 Why Choose <br />{" "}
                 <span className="text-gradient-secondary">
@@ -121,6 +122,8 @@ const Index = () => {
                 className="text-lg text-muted-foreground"
                 data-aos="fade-left"
                 data-aos-delay="200"
+                data-aos-duration="1000"
+                data-aos-easing="ease-out-cubic"
               >
                 Your trusted partner in achieving commercial real estate
                 success.
@@ -132,8 +135,9 @@ const Index = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  data-aos="fade-up"
-                  data-aos-delay={600 + index * 300} // wait for left col first, then stagger
+                  data-aos="zoom-in-up"
+                  data-aos-delay={index * 150} // Staggered animation
+                  data-aos-duration="800"
                   className="group p-6 bg-card/40 rounded-xl border border-border/20 hover:border-primary/50 hover:bg-card/60 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="mb-4">{feature.icon}</div>
@@ -149,6 +153,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+
       {/* CTA Section - **PREMIUM ENHANCEMENT** */}
       <section className="py-24">
         <div className="container mx-auto px-4">

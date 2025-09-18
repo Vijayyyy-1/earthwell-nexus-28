@@ -80,19 +80,19 @@ const Hero = () => {
                 value="purchase"
                 className="data-[state=inactive]:text-black"
               >
-                Purchase
+                Residential
               </TabsTrigger>
               <TabsTrigger
                 value="rent"
                 className="data-[state=inactive]:text-black"
               >
-                Rent
+                Commercial
               </TabsTrigger>
               <TabsTrigger
                 value="sale"
                 className="data-[state=inactive]:text-black"
               >
-                Sale
+                Pre Lease
               </TabsTrigger>
             </TabsList>
             <TabsContent value="purchase">

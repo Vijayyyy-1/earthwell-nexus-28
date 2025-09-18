@@ -118,9 +118,9 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
           >
             {property.type}
           </Badge>
-          <span className="text-xs text-muted-foreground">
+          {/* <span className="text-xs text-muted-foreground">
             Built {property.yearBuilt}
-          </span>
+          </span> */}
         </div>
 
         <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-smooth line-clamp-2">
@@ -144,7 +144,7 @@ const PropertyCard = ({ property, featured = false }: PropertyCardProps) => {
           <div className="flex items-center">
             <Building2 className="w-4 h-4 mr-1.5 text-secondary" />
             <span className="font-medium">
-              {property.financials.capRate}% Cap Rate
+              {property.financials.capRate}% MIN ROI
             </span>
           </div>
         </div>
