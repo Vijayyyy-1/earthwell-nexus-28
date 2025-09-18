@@ -19,12 +19,12 @@ const PrincipleCard = ({ icon, title, children }) => (
     viewport={{ once: true }}
     transition={{ duration: 0.6, ease: "easeOut" }}
   >
-    <Card className="bg-white/50 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <CardHeader className="items-center">
+    <Card className="bg-white/50 text-center shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+      <CardHeader className="items-center flex flex-col">
         {icon}
         <CardTitle className="font-serif text-2xl mt-4">{title}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow">
         <p className="text-slate-600 leading-relaxed">{children}</p>
       </CardContent>
     </Card>

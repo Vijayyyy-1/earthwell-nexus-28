@@ -3,28 +3,29 @@ import { mockProperties } from "@/data/properties";
 import { Button } from "@/components/ui/button";
 import {
   MapPin,
+  Phone,
   BedDouble,
   Bath,
   Ruler,
   CheckCircle2,
+  CalendarDays,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
 const PropertyPage = () => {
   const { id } = useParams();
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-
   const property = mockProperties.find((p) => p.id === id);
 
   if (!property) {
     return (
-      <div className="text-center py-20 font-serif">
-        <h2 className="text-2xl font-bold">Property Not Found</h2>
+      <div className="text-center py-20">
+        <h2 className="text-2xl font-bold">Property not found</h2>
       </div>
     );
   }
@@ -42,193 +43,263 @@ const PropertyPage = () => {
 
   const description = property.description || "No description available.";
   const truncatedDescription =
-    description.length > 300
-      ? `${description.substring(0, 300)}...`
+    description.length > 250
+      ? `${description.substring(0, 250)}...`
       : description;
 
   return (
-    <div className="min-h-screen bg-[#F8F7F4] text-slate-800">
+    <div className="min-h-screen bg-background">
       {/* --- Sticky Nav --- */}
-      <div className="sticky top-0 bg-[#F8F7F4]/80 backdrop-blur-md z-20 shadow-sm flex justify-center flex-wrap gap-x-2 py-3 border-b border-black/10">
-        <Button variant="ghost" onClick={() => scrollToSection("residence")}>
-          The Residence
+      <div className="sticky top-0 bg-card z-20 shadow-md flex justify-center flex-wrap gap-x-4 py-3 border-b border-border/40">
+        <Button variant="ghost" onClick={() => scrollToSection("gallery")}>
+          Gallery
         </Button>
-        <Button variant="ghost" onClick={() => scrollToSection("specifications")}>
-          Specifications
+        <Button variant="ghost" onClick={() => scrollToSection("overview")}>
+          Overview
+        </Button>
+        <Button variant="ghost" onClick={() => scrollToSection("details")}>
+          Details
         </Button>
         <Button variant="ghost" onClick={() => scrollToSection("location")}>
           Location
         </Button>
-        <Button variant="ghost" onClick={() => scrollToSection("inquiry")}>
-          Private Inquiry
+        <Button variant="ghost" onClick={() => scrollToSection("contact")}>
+          Contact
         </Button>
       </div>
 
-      {/* --- Cinematic Hero Section --- */}
-      <section className="relative h-[70vh] w-full flex items-center justify-center text-white">
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <img
-          src={property.images?.[0] || "/placeholder.svg"}
-          alt="Main property view"
-          className="w-full h-full object-cover"
-        />
-        <div className="relative z-20 text-center">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight">
-            {property.title}
-          </h1>
-          <div className="flex items-center justify-center text-lg mt-4">
-            <MapPin className="w-5 h-5 mr-2" />
-            <span>
-              {property.location.city}, {property.location.state}
-            </span>
+      <div className="container mx-auto px-4 py-12 space-y-16">
+        {/* --- Header & Image Gallery --- */}
+        <section id="gallery">
+          <div className="mb-4">
+            <h1 className="text-4xl font-extrabold tracking-tight mb-1">
+              {property.title}
+            </h1>
+            <div className="flex items-center text-muted-foreground">
+              <MapPin className="w-5 h-5 mr-2" />
+              <span className="text-lg">
+                {property.location.city}, {property.location.state}
+              </span>
+            </div>
           </div>
-          <Button
-            variant="outline"
-            className="mt-8 bg-transparent text-white border-white hover:bg-white hover:text-black"
-            onClick={() => scrollToSection("residence")}
-          >
-            Explore the Residence
-          </Button>
-        </div>
-      </section>
 
-      <div className="container mx-auto px-4 py-24 space-y-24">
-        {/* --- Overview & Advisor Section --- */}
-        <section id="residence">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-12 gap-y-8">
-            {/* Left Column: Content */}
-            <div className="lg:col-span-2 space-y-12">
-              {/* At a Glance Card */}
-              <Card className="bg-transparent border-none shadow-none">
+          <div className="grid grid-cols-3 grid-rows-2 gap-4 h-[550px]">
+            <div className="col-span-3 lg:col-span-2 row-span-2 rounded-lg overflow-hidden">
+              <img
+                src={property.images?.[0] || "/placeholder.svg"}
+                alt="Main property view"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="hidden lg:block rounded-lg overflow-hidden">
+              <img
+                src={property.images?.[1] || "/placeholder.svg"}
+                alt="Property view 2"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="hidden lg:block rounded-lg overflow-hidden relative">
+              <img
+                src={property.images?.[2] || "/placeholder.svg"}
+                alt="Property view 3"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <Button variant="secondary">
+                  📷 View all {property.images?.length} photos
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- Overview Section --- */}
+        <section id="overview">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
+              {/* Stats Card */}
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-4xl font-serif">
-                    At a Glance
-                  </CardTitle>
+                  <CardTitle>Property Overview</CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
-                  <div className="flex items-center gap-4">
-                    <BedDouble className="w-8 h-8 text-primary" />
-                    <div>
-                      <p className="text-lg font-semibold">
-                        {property.beds ?? "N/A"} Bedrooms
-                      </p>
-                    </div>
+                <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Price</p>
+                    <p className="text-2xl font-bold text-primary">
+                      ₹{property.price.toLocaleString("en-IN")}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Bath className="w-8 h-8 text-primary" />
-                    <div>
-                      <p className="text-lg font-semibold">
-                        {property.baths ?? "N/A"} Bathrooms
-                      </p>
-                    </div>
+                  <div className="flex flex-col items-center">
+                    <BedDouble className="w-6 h-6 mb-2 text-primary" />
+                    <p className="text-lg font-semibold">
+                      {property.beds ?? "N/A"} Beds
+                    </p>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Ruler className="w-8 h-8 text-primary" />
-                    <div>
-                      <p className="text-lg font-semibold">
-                        {property.sqft.toLocaleString("en-IN")} sq ft
-                      </p>
-                    </div>
+                  <div className="flex flex-col items-center">
+                    <Bath className="w-6 h-6 mb-2 text-primary" />
+                    <p className="text-lg font-semibold">
+                      {property.baths ?? "N/A"} Baths
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Ruler className="w-6 h-6 mb-2 text-primary" />
+                    <p className="text-lg font-semibold">
+                      {property.sqft.toLocaleString("en-IN")} sq ft
+                    </p>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Description Card */}
-              <Card className="bg-transparent border-none shadow-none">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-4xl font-serif">
-                    The Residence
-                  </CardTitle>
+                  <CardTitle>About this Property</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-lg text-slate-600 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {showFullDescription ? description : truncatedDescription}
                   </p>
-                  {description.length > 300 && (
+                  {description.length > 250 && (
                     <Button
                       variant="link"
-                      className="p-0 mt-4 text-primary"
+                      className="p-0 mt-2"
                       onClick={() =>
                         setShowFullDescription(!showFullDescription)
                       }
                     >
-                      {showFullDescription ? "Show less" : "Continue reading"}
+                      {showFullDescription ? "Read less" : "Read more"}
                     </Button>
                   )}
                 </CardContent>
               </Card>
             </div>
 
-            {/* Right Column: Sticky Advisor */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-28 space-y-4">
-                {agents.map((agent, idx) => (
-                  <Card key={idx} className="text-left bg-white shadow-lg">
-                    <CardHeader>
-                      <img
-                        src={agent.image ?? "/agent-placeholder.jpg"}
-                        alt={agent.name}
-                        className="w-20 h-20 rounded-full mb-4"
-                      />
-                      <CardTitle className="text-2xl font-serif">
-                        {agent.name}
-                      </CardTitle>
-                      <p className="text-sm text-primary">
-                        Private Listing Advisor
-                      </p>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <Button className="w-full">
-                        Schedule a Private Viewing
-                      </Button>
-                      <Button variant="secondary" className="w-full">
-                        Request Digital Brochure
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+            {/* Agent Card */}
+            <div className="space-y-4">
+              {agents.map((agent, idx) => (
+                <Card key={idx} className="text-center">
+                  <CardHeader>
+                    <img
+                      src={agent.image ?? "/agent-placeholder.jpg"}
+                      alt={agent.name}
+                      className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary/20"
+                    />
+                    <CardTitle>{agent.name}</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Listing Agent
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <Button className="w-full">
+                      <Phone className="w-4 h-4 mr-2" /> Call Agent
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      className="w-full"
+                      onClick={() => scrollToSection("contact")}
+                    >
+                      Request Info
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
 
         {/* --- Details Section --- */}
-        <section id="specifications">
-          <Card className="bg-white shadow-lg">
+        <section id="details">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-4xl font-serif">
-                Specifications & Appointments
-              </CardTitle>
+              <CardTitle>Features & Details</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="mt-8">
-                <h3 className="text-2xl font-serif mb-4 border-b pb-2">
-                  Interior Appointments
-                </h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4 text-slate-600">
-                  {property.features?.map((feature, idx) => (
-                    <li key={idx} className="flex items-center">
-                      <CheckCircle2 className="w-4 h-4 mr-3 text-primary" />
-                      {feature}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                {/* Left Column */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold border-b pb-2">
+                    Property Information
+                  </h3>
+                  <ul className="text-muted-foreground space-y-2">
+                    <li className="flex justify-between">
+                      <span>Property ID</span>{" "}
+                      <strong className="text-foreground">{property.id}</strong>
                     </li>
-                  ))}
-                </ul>
+                    <li className="flex justify-between">
+                      <span>Type</span>{" "}
+                      <strong className="text-foreground">
+                        {property.type}
+                      </strong>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Status</span>{" "}
+                      <strong className="text-foreground">
+                        {property.availability}
+                      </strong>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Year Built</span>{" "}
+                      <strong className="text-foreground">
+                        {property.yearBuilt}
+                      </strong>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold border-b pb-2">
+                    Financials
+                  </h3>
+                  <ul className="text-muted-foreground space-y-2">
+                    <li className="flex justify-between">
+                      <span>Cap Rate</span>{" "}
+                      <strong className="text-foreground">
+                        {property.financials.capRate}%
+                      </strong>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Gross Income</span>{" "}
+                      <strong className="text-foreground">
+                        ₹
+                        {property.financials.grossIncome.toLocaleString(
+                          "en-IN"
+                        )}
+                      </strong>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Expenses</span>{" "}
+                      <strong className="text-foreground">
+                        ₹{property.financials.expenses.toLocaleString("en-IN")}
+                      </strong>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div className="mt-12">
-                <h3 className="text-2xl font-serif mb-4 border-b pb-2">
-                  Community Amenities
-                </h3>
-                <div className="flex flex-wrap gap-3">
+
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold mb-3">Amenities</h3>
+                <div className="flex flex-wrap gap-2">
                   {property.amenities?.map((amenity, idx) => (
-                    <Badge
-                      key={idx}
-                      variant="outline"
-                      className="py-2 px-4 text-md"
-                    >
+                    <Badge key={idx} variant="secondary" className="py-1 px-3">
                       {amenity}
                     </Badge>
                   ))}
                 </div>
+              </div>
+
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold mb-3">
+                  Additional Features
+                </h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 text-muted-foreground">
+                  {property.features?.map((feature, idx) => (
+                    <li key={idx} className="flex items-center">
+                      <CheckCircle2 className="w-4 h-4 mr-2 text-green-500" />{" "}
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </CardContent>
           </Card>
@@ -236,80 +307,65 @@ const PropertyPage = () => {
 
         {/* --- Location Section --- */}
         <section id="location">
-           <Card className="bg-white shadow-lg">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-4xl font-serif">An Unrivaled Location</CardTitle>
+              <CardTitle>Location</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="aspect-[16/7] rounded-lg overflow-hidden relative">
+              <div className="aspect-video rounded-lg overflow-hidden relative">
                 <img
                   src="https://static.vecteezy.com/system/resources/thumbnails/003/171/231/small/abstract-city-map-with-pins-and-gps-tracking-vector-illustration.jpg"
                   alt="Map placeholder"
                   className="w-full h-full object-cover grayscale"
                 />
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                  <Button>View on Map</Button>
+                </div>
               </div>
             </CardContent>
           </Card>
         </section>
 
-        {/* --- Inquiry Section --- */}
-        <section id="inquiry">
-          <Card className="bg-white shadow-lg">
+        {/* --- Contact Section --- */}
+        <section id="contact">
+          <Card>
             <CardHeader className="text-center">
-              <CardTitle className="text-4xl font-serif">
-                Private Inquiry
-              </CardTitle>
-              <p className="text-slate-600 max-w-2xl mx-auto pt-2">
-                For further details or to arrange a private viewing, please
-                leave your information. Our advisor will be in touch shortly.
+              <CardTitle>Let's Get in Touch</CardTitle>
+              <p className="text-muted-foreground">
+                Interested in this property? Fill out the form below.
               </p>
             </CardHeader>
             <CardContent>
-              <form className="flex flex-col gap-6 max-w-md mx-auto">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" type="text" placeholder="Your Full Name" />
+              <form className="flex flex-col gap-4 max-w-lg mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Your Name</Label>
+                    <Input id="name" type="text" placeholder="John Doe" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Your Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="john.d@example.com"
+                    />
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="contact">Preferred Contact</Label>
-                  <Input
-                    id="contact"
-                    type="text"
-                    placeholder="Email or Phone Number"
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
+                    id="message"
+                    placeholder="I'd like more information about the financials..."
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full mt-4">
-                  Submit Inquiry
+                <Button type="submit" size="lg" className="w-full">
+                  Send Message
                 </Button>
               </form>
             </CardContent>
           </Card>
         </section>
       </div>
-
-      {/* --- Lightbox Modal (optional but recommended) --- */}
-      {isLightboxOpen && (
-         <div 
-           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-           onClick={() => setIsLightboxOpen(false)}
-         >
-           <div className="relative w-full max-w-5xl h-[90vh]" onClick={(e) => e.stopPropagation()}>
-             <img 
-               src={property.images?.[0] || "/placeholder.svg"} 
-               alt="Property full view"
-               className="w-full h-full object-contain"
-             />
-             <Button 
-               variant="secondary"
-               size="icon"
-               className="absolute top-2 right-2 rounded-full"
-               onClick={() => setIsLightboxOpen(false)}
-             >
-               X
-             </Button>
-           </div>
-         </div>
-      )}
     </div>
   );
 };
