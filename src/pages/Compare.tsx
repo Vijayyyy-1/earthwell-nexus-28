@@ -172,7 +172,7 @@ const Compare = () => {
               {property.agent && (
                 <div className="mt-6 pt-4 border-t border-border/30 flex items-center gap-3">
                   <img
-                    src={"/agent-placeholder.jpg"}
+                    src={property.agent.img ?? "/agent-placeholder.jpg"}
                     alt={property.agent.name}
                     className="w-12 h-12 rounded-full object-cover border border-border/30"
                   />

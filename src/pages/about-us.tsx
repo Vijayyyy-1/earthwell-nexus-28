@@ -1,3 +1,4 @@
+import Ceo from "@/assets/ceo-earthwell.jpg";
 import {
   BookOpen,
   Eye,
@@ -7,6 +8,7 @@ import {
   Users,
   Sparkles,
   ShieldCheck,
+  Quote, // Added Quote icon for the CEO's quote
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -16,7 +18,7 @@ const PrincipleCard = ({ icon, title, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
+    viewport={{ once: true, amount: 0.2 }} // Added amount to trigger animation earlier
     transition={{ duration: 0.6, ease: "easeOut" }}
   >
     <Card className="bg-white/50 text-center shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
@@ -53,12 +55,13 @@ const AboutUsPage = () => {
             Personality"
           </p>
         </motion.section>
+        
 
         {/* --- Who We Are Section --- */}
         <motion.section
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-8 items-center">
@@ -86,9 +89,69 @@ const AboutUsPage = () => {
                 className="w-full h-full object-cover"
                 initial={{ scale: 0.95, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8 }}
               />
+            </div>
+          </div>
+        </motion.section>
+
+        
+
+        {/* --- CEO Speaks Section --- */}
+        <motion.section
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <h2 className="text-4xl font-serif text-center mb-12">CEO Speaks</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 items-center">
+            {/* Left Column: CEO Introduction */}
+            <div className="space-y-6 lg:order-1">
+              <h3 className="text-3xl font-serif font-semibold text-slate-700">
+                Bijendra Tiwari
+              </h3>
+              <p className="text-lg text-slate-600 leading-relaxed">
+                A keen business acumen having thorough knowledge of the Real
+                estate market and experience of over 17 years, high service
+                standards and diligent customer-centric approach has been
+                instrumental in the wealth creation for clients. This dedication
+                has steered Earthwell towards great heights of excellence. We
+                strongly focus on creating long-lasting customer relationships
+                with a personal touch, passion and love, combined with absolute
+                care & attention for services; which has made the Earthwell
+                brand what it is today.
+              </p>
+            </div>
+            {/* Right Column: CEO Image and Quote */}
+            <div className="lg:order-2 flex flex-col items-center space-y-8">
+              <div className="w-64 h-64 rounded-full overflow-hidden shadow-xl border-4 border-primary/20">
+                <motion.img
+                  src={Ceo} // Placeholder image for CEO
+                  alt="Bijendra Tiwari, CEO of Earthwell"
+                  className="w-full h-full object-cover object-top"
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, amount: 0.5 }}
+                  transition={{ duration: 0.8 }}
+                />
+              </div>
+              <motion.blockquote
+                className="text-center italic text-xl md:text-2xl font-serif text-slate-700 max-w-lg mx-auto relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+              >
+                <Quote className="w-10 h-10 text-primary absolute -top-4 -left-4 opacity-20" />{" "}
+                {/* Decorative quote icon */}
+                “Our way of doing business is akin to that of sculptor who
+                carves each piece of art with precision and a great attention to
+                detailing”
+                <Quote className="w-10 h-10 text-primary absolute -bottom-4 -right-4 opacity-20 rotate-180" />{" "}
+                {/* Decorative quote icon */}
+              </motion.blockquote>
             </div>
           </div>
         </motion.section>
@@ -97,7 +160,7 @@ const AboutUsPage = () => {
         <motion.section
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center"
         >
           <motion.div
@@ -188,7 +251,7 @@ const AboutUsPage = () => {
           className="text-center py-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8 }}
         >
           <p className="text-2xl md:text-3xl font-serif text-slate-700 max-w-5xl mx-auto">

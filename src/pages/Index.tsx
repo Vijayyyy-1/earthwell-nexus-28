@@ -52,21 +52,21 @@ const Index = () => {
       <Hero />
 
       {/* Featured Properties - Minor enhancements for consistency */}
-      <section className="py-24 bg-card/30">
+      <section className="py-24 bg-card/30 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
             <div className="mb-8 md:mb-0">
               <h2
                 className="text-4xl lg:text-5xl font-bold text-foreground mb-4"
-                data-aos="fade-up"
-                data-aos-delay="100"
+                // data-aos="fade-up"
+                // data-aos-delay="100"
               >
                 Exclusive Listings
               </h2>
               <p
                 className="text-lg text-muted-foreground max-w-xl"
-                data-aos="fade-up"
-                data-aos-delay="200"
+                // data-aos="fade-up"
+                // data-aos-delay="200"
               >
                 Explore our premium selection of commercial real estate
                 opportunities.
@@ -77,8 +77,8 @@ const Index = () => {
                 variant="luxury"
                 size="lg"
                 className="flex-shrink-0"
-                data-aos="fade-left"
-                data-aos-delay="200"
+                // data-aos="fade-left"
+                // data-aos-delay="200"
               >
                 View All Properties
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
@@ -90,9 +90,9 @@ const Index = () => {
             {featuredProperties.map((property, index) => (
               <div
                 key={property.id}
-                data-aos="fade-up"
-                data-aos-delay={index * 200} // 0ms, 200ms, 400ms...
-                data-aos-duration="1000" // smooth timing
+             //   data-aos="fade-up"
+               // data-aos-delay={index * 200} // 0ms, 200ms, 400ms...
+                //data-aos-duration="1000" // smooth timing
               >
                 <PropertyCard property={property} />
               </div>
@@ -109,9 +109,9 @@ const Index = () => {
             <div className="lg:col-span-4 text-center lg:text-left">
               <h2
                 className="text-4xl lg:text-5xl font-bold text-foreground mb-4"
-                data-aos="fade-right"
-                data-aos-duration="1000"
-                data-aos-easing="ease-out-cubic"
+                // data-aos="fade-right"
+                // data-aos-duration="1000"
+                // data-aos-easing="ease-out-cubic"
               >
                 Why Choose <br />{" "}
                 <span className="text-gradient-secondary">
@@ -120,10 +120,10 @@ const Index = () => {
               </h2>
               <p
                 className="text-lg text-muted-foreground"
-                data-aos="fade-left"
-                data-aos-delay="200"
-                data-aos-duration="1000"
-                data-aos-easing="ease-out-cubic"
+                // data-aos="fade-left"
+                // data-aos-delay="200"
+                // data-aos-duration="1000"
+                // data-aos-easing="ease-out-cubic"
               >
                 Your trusted partner in achieving commercial real estate
                 success.
@@ -135,9 +135,9 @@ const Index = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  data-aos="zoom-in-up"
-                  data-aos-delay={index * 150} // Staggered animation
-                  data-aos-duration="800"
+                  // data-aos="zoom-in-up"
+                  // data-aos-delay={index * 150} // Staggered animation
+                  // data-aos-duration="800"
                   className="group p-6 bg-card/40 rounded-xl border border-border/20 hover:border-primary/50 hover:bg-card/60 transition-all duration-300 transform hover:-translate-y-1"
                 >
                   <div className="mb-4">{feature.icon}</div>

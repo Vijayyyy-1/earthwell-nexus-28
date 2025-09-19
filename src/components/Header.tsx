@@ -60,7 +60,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-card/98 backdrop-blur-md border-b border-border shadow-subtle">
+      <header className="sticky top-0 z-50 bg-card/98 backdrop-blur-3xl border-b border-border shadow-subtle">
         <div className="luxury-container">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -79,7 +79,7 @@ const Header = () => {
                 >
                   Earthwell Realty
                 </h1>
-                <p className="text-xs text-muted-foreground tracking-widest font-bold">
+                <p className="text-xs tracking-widest font-bold text-black">
                   a2z in Properties & Services
                 </p>
               </div>

@@ -85,19 +85,27 @@ const PropertyPage = () => {
           </div>
 
           <div className="grid grid-cols-3 grid-rows-2 gap-4 h-[550px]">
-            <div className="col-span-3 lg:col-span-2 row-span-2 rounded-lg overflow-hidden">
+            <div className="col-span-3 lg:col-span-2 row-span-2 rounded-lg overflow-hidden relative">
               <img
                 src={property.images?.[0] || "/placeholder.svg"}
                 alt="Main property view"
                 className="w-full h-full object-cover"
               />
+              {/* Watermark */}
+              <div className="absolute bottom-4 right-4 opacity-40 text-white text-3xl font-bold select-none">
+                Earthwell Reality
+              </div>
             </div>
-            <div className="hidden lg:block rounded-lg overflow-hidden">
+            <div className="hidden lg:block rounded-lg overflow-hidden relative">
               <img
                 src={property.images?.[1] || "/placeholder.svg"}
                 alt="Property view 2"
                 className="w-full h-full object-cover"
               />
+              {/* Watermark */}
+              <div className="absolute bottom-3 right-3 opacity-40 text-white text-3xl font-bold select-none">
+                Earthwell Reality
+              </div>
             </div>
             <div className="hidden lg:block rounded-lg overflow-hidden relative">
               <img
@@ -181,7 +189,7 @@ const PropertyPage = () => {
                 <Card key={idx} className="text-center">
                   <CardHeader>
                     <img
-                      src={agent.image ?? "/agent-placeholder.jpg"}
+                      src={agent.img ?? "/agent-placeholder.jpg"}
                       alt={agent.name}
                       className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary/20"
                     />
