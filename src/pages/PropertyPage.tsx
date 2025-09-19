@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { mockProperties } from "@/data/properties";
 import { Button } from "@/components/ui/button";
+import GoogleMapComponent from "@/components/GoogleMapComponent";
 import {
   MapPin,
   Phone,
@@ -312,16 +313,11 @@ const PropertyPage = () => {
               <CardTitle>Location</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="aspect-video rounded-lg overflow-hidden relative">
-                <img
-                  src="https://static.vecteezy.com/system/resources/thumbnails/003/171/231/small/abstract-city-map-with-pins-and-gps-tracking-vector-illustration.jpg"
-                  alt="Map placeholder"
-                  className="w-full h-full object-cover grayscale"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                  <Button>View on Map</Button>
-                </div>
-              </div>
+              <GoogleMapComponent
+                lat={property.location.coordinates[1]}
+                lng={property.location.coordinates[0]}
+                title={property.title}
+              />
             </CardContent>
           </Card>
         </section>
