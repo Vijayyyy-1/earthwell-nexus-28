@@ -11,6 +11,7 @@ export interface Property {
   id: string;
   title: string;
   type: "office" | "retail" | "industrial" | "warehouse";
+  category: "commercial" | "preleased" | "residential";
   price: number; // Price in INR
   sqft: number;
   location: {
@@ -57,6 +58,7 @@ export const mockProperties: Property[] = [
     id: "prop-101",
     title: "Prime BKC Corporate Tower",
     type: "office",
+    category :"commercial",
     price: 1300000000, // ₹130 Crore
     sqft: 65000,
     location: {
@@ -114,6 +116,7 @@ export const mockProperties: Property[] = [
     id: "prop-102",
     title: "Koramangala High-Street Retail Space",
     type: "retail",
+    category : "residential",
     price: 450000000, // ₹45 Crore
     sqft: 22000,
     location: {
@@ -165,6 +168,7 @@ export const mockProperties: Property[] = [
     id: "prop-103",
     title: "Chakan MIDC Logistics Park",
     type: "warehouse",
+    category :"commercial",
     price: 850000000, // ₹85 Crore
     sqft: 250000,
     location: {
@@ -223,6 +227,7 @@ export const mockProperties: Property[] = [
     id: "prop-104",
     title: "Gurugram Cyber City IT Hub",
     type: "office",
+    category : "preleased",
     price: 1100000000, // ₹110 Crore
     sqft: 80000,
     location: {
@@ -274,6 +279,7 @@ export const mockProperties: Property[] = [
     id: "prop-105",
     title: "Hyderabad Pharma Industrial Unit",
     type: "industrial",
+    category :"commercial",
     price: 600000000, // ₹60 Crore
     sqft: 150000,
     location: {
@@ -325,6 +331,7 @@ export const mockProperties: Property[] = [
     id: "prop-106",
     title: "OMR Chennai Tech Park",
     type: "office",
+    category :"preleased",
     price: 950000000, // ₹95 Crore
     sqft: 120000,
     location: {
@@ -379,6 +386,7 @@ export const mockProperties: Property[] = [
     id: "prop-107",
     title: "Park Street Heritage Retail Building",
     type: "retail",
+    category : "residential",
     price: 700000000, // ₹70 Crore
     sqft: 30000,
     location: {
@@ -430,6 +438,7 @@ export const mockProperties: Property[] = [
     id: "prop-108",
     title: "Bhiwandi Mega Warehouse Hub",
     type: "warehouse",
+    category :"preleased",
     price: 1150000000, // ₹115 Crore
     sqft: 400000,
     location: {
@@ -481,6 +490,7 @@ export const mockProperties: Property[] = [
     id: "prop-109",
     title: "SG Highway Commercial Complex",
     type: "office",
+    category : "preleased",
     price: 550000000, // ₹55 Crore
     sqft: 50000,
     location: {
@@ -532,6 +542,7 @@ export const mockProperties: Property[] = [
     id: "prop-110",
     title: "Noida Manufacturing Plant",
     type: "industrial",
+    category :"commercial",
     price: 750000000, // ₹75 Crore
     sqft: 200000,
     location: {
@@ -583,6 +594,7 @@ export const mockProperties: Property[] = [
     id: "prop-111",
     title: "Hinjawadi Phase 1 IT Office",
     type: "office",
+    category :"preleased",
     price: 680000000, // ₹68 Crore
     sqft: 90000,
     location: {
@@ -635,6 +647,7 @@ export const mockProperties: Property[] = [
     id: "prop-112",
     title: "Jaipur Showroom and Warehouse",
     type: "retail",
+    category : "residential",
     price: 250000000, // ₹25 Crore
     sqft: 40000,
     location: {

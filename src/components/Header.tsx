@@ -39,7 +39,7 @@ const Header = () => {
   const navigation = [
     { name: "Properties", href: "/properties", icon: Building2 },
     { name: "About Us", href: "/about-us", icon: Users },
-    // { name: "Search", href: "/search", icon: Search },
+    { name: "Search", href: "/search", icon: Search },
     // { name: "ROI Calculator", href: "/calculator", icon: Calculator },
     { name: "Contact", href: "/contact", icon: Phone },
   ];
