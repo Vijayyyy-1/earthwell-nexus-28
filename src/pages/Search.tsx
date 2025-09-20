@@ -1,18 +1,24 @@
 import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import PropertyCard from "@/components/PropertyCard";
 import { mockProperties } from "@/data/properties";
-import { 
-  Search as SearchIcon, 
-  MapPin, 
-  Building2, 
+import {
+  Search as SearchIcon,
+  MapPin,
+  Building2,
   SlidersHorizontal,
   Grid3X3,
   List,
-  Filter
+  Filter,
 } from "lucide-react";
 
 const Search = () => {
@@ -27,16 +33,19 @@ const Search = () => {
   // Filter and sort properties
   const filteredAndSortedProperties = useMemo(() => {
     let filtered = mockProperties.filter((property) => {
-      const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          property.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          property.location.city.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesType = propertyType === "all" || property.type === propertyType;
-      
-      const matchesLocation = !location || 
-                            property.location.city.toLowerCase().includes(location.toLowerCase()) ||
-                            property.location.state.toLowerCase().includes(location.toLowerCase());
-      
+      const matchesSearch =
+        property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        property.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        property.location.city.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesType =
+        propertyType === "all" || property.type === propertyType;
+
+      const matchesLocation =
+        !location ||
+        property.location.city.toLowerCase().includes(location.toLowerCase()) ||
+        property.location.state.toLowerCase().includes(location.toLowerCase());
+
       let matchesPrice = true;
       if (priceRange !== "all") {
         switch (priceRange) {
@@ -44,10 +53,12 @@ const Search = () => {
             matchesPrice = property.price < 5000000;
             break;
           case "5m-10m":
-            matchesPrice = property.price >= 5000000 && property.price < 10000000;
+            matchesPrice =
+              property.price >= 5000000 && property.price < 10000000;
             break;
           case "10m-20m":
-            matchesPrice = property.price >= 10000000 && property.price < 20000000;
+            matchesPrice =
+              property.price >= 10000000 && property.price < 20000000;
             break;
           case "over-20m":
             matchesPrice = property.price >= 20000000;
@@ -74,7 +85,11 @@ const Search = () => {
         break;
       case "newest":
       default:
-        filtered.sort((a, b) => new Date(b.listingDate).getTime() - new Date(a.listingDate).getTime());
+        filtered.sort(
+          (a, b) =>
+            new Date(b.listingDate).getTime() -
+            new Date(a.listingDate).getTime()
+        );
         break;
     }
 
@@ -110,12 +125,13 @@ const Search = () => {
       {/* Header */}
       <div className="bg-card border-b border-border/20">
         <div className="container mx-auto px-4 py-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-foreground mb-4">
-              Search Commercial Properties
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-serif text-[#1a1a1a] mb-6 tracking-tight">
+              Search Premium Properties
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Find the perfect commercial space for your business needs
+            <p className="text-xl text-[#6d6d6d] max-w-2xl mx-auto font-serif">
+              Discover exclusive real estate opportunities across premier
+              locations
             </p>
           </div>
 
@@ -132,8 +148,8 @@ const Search = () => {
                   className="pl-12 h-12 bg-background border-border shadow-sm"
                 />
               </div>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
                 className="md:w-auto w-full h-12"
               >
@@ -150,7 +166,10 @@ const Search = () => {
                     <label className="block text-sm font-medium text-muted-foreground mb-2">
                       Property Type
                     </label>
-                    <Select value={propertyType} onValueChange={setPropertyType}>
+                    <Select
+                      value={propertyType}
+                      onValueChange={setPropertyType}
+                    >
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
@@ -224,7 +243,10 @@ const Search = () => {
                 <p className="text-muted-foreground">
                   {filteredAndSortedProperties.length} properties found
                 </p>
-                {(searchTerm || propertyType !== "all" || priceRange !== "all" || location) && (
+                {(searchTerm ||
+                  propertyType !== "all" ||
+                  priceRange !== "all" ||
+                  location) && (
                   <div className="flex items-center space-x-2">
                     {propertyType !== "all" && (
                       <Badge variant="secondary" className="capitalize">
@@ -233,16 +255,12 @@ const Search = () => {
                     )}
                     {priceRange !== "all" && (
                       <Badge variant="secondary">
-                        {priceRanges.find(r => r.value === priceRange)?.label}
+                        {priceRanges.find((r) => r.value === priceRange)?.label}
                       </Badge>
                     )}
-                    {location && (
-                      <Badge variant="secondary">
-                        {location}
-                      </Badge>
-                    )}
-                    <Button 
-                      variant="ghost" 
+                    {location && <Badge variant="secondary">{location}</Badge>}
+                    <Button
+                      variant="ghost"
                       size="sm"
                       onClick={() => {
                         setSearchTerm("");
@@ -281,11 +299,13 @@ const Search = () => {
       {/* Properties Grid */}
       <div className="container mx-auto px-4 py-12">
         {filteredAndSortedProperties.length > 0 ? (
-          <div className={`grid gap-8 ${
-            viewMode === "grid" 
-              ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3" 
-              : "grid-cols-1 max-w-4xl mx-auto"
-          }`}>
+          <div
+            className={`grid gap-8 ${
+              viewMode === "grid"
+                ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+                : "grid-cols-1 max-w-4xl mx-auto"
+            }`}
+          >
             {filteredAndSortedProperties.map((property, index) => (
               <PropertyCard
                 key={property.id}
@@ -303,7 +323,7 @@ const Search = () => {
             <p className="text-muted-foreground mb-6">
               Try adjusting your search criteria or clearing filters
             </p>
-            <Button 
+            <Button
               variant="default"
               onClick={() => {
                 setSearchTerm("");
